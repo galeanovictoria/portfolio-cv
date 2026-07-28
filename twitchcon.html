@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Newsreader:opsz,ital,wght@6..72,0,400;6..72,0,500;6..72,1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  a { color: inherit; text-decoration: none; }
+  a:hover { color: #0b6e3c; }
+  @media (max-width: 860px) {
+    .cs-pad { padding-left: 20px !important; padding-right: 20px !important; }
+    .cs-two { grid-template-columns: 1fr !important; gap: 24px !important; }
+    .cs-meta { grid-template-columns: 1fr 1fr !important; }
+    .cs-stats { grid-template-columns: 1fr 1fr !important; }
+  }
+</style>
+</helmet>
+
+<div style="min-height:100vh; background:#ece8df; color:#16150f; font-family:'Public Sans',sans-serif;">
+
+  <nav class="cs-pad" style="position:sticky; top:0; z-index:20; display:flex; align-items:center; justify-content:space-between; padding:18px 32px; background:color-mix(in srgb, #ece8df 80%, transparent); backdrop-filter:blur(7px);">
+    <a href="index.html" style="font-family:'IBM Plex Mono',monospace; font-size:12.5px; letter-spacing:.04em;">← All work</a>
+    <a href="index.html#contact" style="font-family:'IBM Plex Mono',monospace; font-size:12px; padding:8px 15px; border:1.5px solid #16150f; border-radius:100px;" style-hover="background:#16150f; color:#ece8df;">Get in touch</a>
+  </nav>
+
+  <header class="cs-pad" style="max-width:1080px; margin:0 auto; padding:64px 32px 0;">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:12.5px; letter-spacing:.16em; color:#0b6e3c; text-transform:uppercase;">Case study 04</div>
+    <h1 style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:clamp(40px,6.4vw,84px); line-height:.98; letter-spacing:-.03em; margin:18px 0 0; text-wrap:balance;">TwitchCon</h1>
+    <p style="font-family:'Newsreader',serif; font-size:clamp(19px,2.1vw,24px); line-height:1.5; max-width:660px; margin:24px 0 0; color:#3a3529;">Twitch asked for basic wireframes. It became a UX engagement that reshaped how the site sells a weekend, welcomes newcomers, and stays editable right up to the day doors open.</p>
+
+    <div class="cs-meta" style="display:grid; grid-template-columns:repeat(4,1fr); gap:0; margin-top:44px; border-top:1.5px solid #16150f; border-bottom:1.5px solid #16150f;">
+      <div style="padding:20px 20px 20px 0; border-right:1px solid #dcd6c9;">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.1em; color:#6a6459;">CLIENT</div>
+        <div style="font-size:15px; font-weight:600; margin-top:6px;">Twitch</div>
+      </div>
+      <div style="padding:20px; border-right:1px solid #dcd6c9;">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.1em; color:#6a6459;">MY ROLE</div>
+        <div style="font-size:15px; font-weight:600; margin-top:6px;">UX lead</div>
+      </div>
+      <div style="padding:20px; border-right:1px solid #dcd6c9;">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.1em; color:#6a6459;">STAKEHOLDERS</div>
+        <div style="font-size:15px; font-weight:600; margin-top:6px;">10–12 across Twitch</div>
+      </div>
+      <div style="padding:20px 0 20px 20px;">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.1em; color:#6a6459;">DELIVERED</div>
+        <div style="font-size:15px; font-weight:600; margin-top:6px;">Wireframes, IA, flows, components</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="cs-pad" style="max-width:1080px; margin:0 auto; padding:40px 32px 0;">
+    <div style="border:1.5px solid #16150f; border-radius:18px; overflow:hidden; background:#faf8f3;">
+      <img src="https://cc-dam.imgix.net/blog-twitchcon-full-site.png?auto=compress&amp;auto=format&amp;w=1600" alt="The finished TwitchCon website" style="display:block; width:100%; height:auto;">
+    </div>
+  </div>
+
+  <section class="cs-pad" style="max-width:1080px; margin:0 auto; padding:72px 32px 0;">
+    <div class="cs-two" style="display:grid; grid-template-columns:200px 1fr; gap:48px; align-items:start;">
+      <h2 style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.14em; color:#0b6e3c; margin:6px 0 0; text-transform:uppercase;">The problem</h2>
+      <div>
+        <p style="font-family:'Newsreader',serif; font-size:20px; line-height:1.6; margin:0; color:#26261c;">TwitchCon is the culmination of every Twitch event of the year, seen by millions. The brief was narrow — wireframes to guide development — but the real challenge underneath it was communication: showing new and returning visitors what they'd <i>actually</i> experience, beyond knowing their favourite streamers would be there.</p>
+        <p style="font-family:'Newsreader',serif; font-size:20px; line-height:1.6; margin:18px 0 0; color:#26261c;">That created a tension. Twitch wanted to sell full weekend passes as well as single-day tickets — which meant giving enough detail to justify a multi-day commitment, while keeping the site welcoming to someone attending their first digital entertainment expo. And the schedule wasn't finalised yet.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-pad" style="max-width:1080px; margin:0 auto; padding:56px 32px 0;">
+    <div class="cs-two" style="display:grid; grid-template-columns:200px 1fr; gap:48px; align-items:start;">
+      <h2 style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.14em; color:#0b6e3c; margin:6px 0 0; text-transform:uppercase;">What I did</h2>
+      <div>
+        <p style="font-family:'Newsreader',serif; font-size:20px; line-height:1.6; margin:0; color:#26261c;">I designed a flow that earns the ask: hero introduction → what the experience actually is → regional detail → tickets. Visitors understand the value before they're asked to buy.</p>
+        <p style="font-family:'Newsreader',serif; font-size:20px; line-height:1.6; margin:18px 0 0; color:#26261c;">Without a schedule to point at, I made the weekend pass tangible another way — a prominent hero component above the fold, and a short animation on the nav ticket button revealing what the full pass includes: the parties, the exclusive content. Small moves aimed squarely at uncertainty.</p>
+        <p style="font-family:'Newsreader',serif; font-size:20px; line-height:1.6; margin:18px 0 0; color:#26261c;">I worked in low-fidelity greyscale deliberately. With 10–12 stakeholders across Twitch, greyscale kept every conversation on layout, hierarchy and information architecture instead of colour — and gave the development team a clean foundation to build against.</p>
+        <p style="font-family:'Newsreader',serif; font-size:20px; line-height:1.6; margin:18px 0 0; color:#26261c;">Accessibility was a principle, not a pass at the end: on-screen content — headings especially — is real HTML text rather than baked into video, so screen readers reach it (and search engines do too). For attendees on-site I designed a mobile schedule with filters for day, time and room, plus search, so nobody has to hunt for the thing they came for.</p>
+
+        <div style="display:flex; flex-wrap:wrap; gap:9px; margin-top:26px;">
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; padding:5px 13px; border:1px solid #dcd6c9; border-radius:100px; background:#faf8f3;">Low-fi greyscale wireframes</span>
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; padding:5px 13px; border:1px solid #dcd6c9; border-radius:100px; background:#faf8f3;">Conversion flow</span>
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; padding:5px 13px; border:1px solid #dcd6c9; border-radius:100px; background:#faf8f3;">Reusable component system</span>
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; padding:5px 13px; border:1px solid #dcd6c9; border-radius:100px; background:#faf8f3;">Accessibility-led</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cs-pad" style="max-width:1080px; margin:0 auto; padding:56px 32px 0;">
+    <div class="cs-two" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+      <figure style="margin:0;">
+        <div style="border:1.5px solid #16150f; border-radius:16px; overflow:hidden; background:#faf8f3;">
+          <img src="https://cc-dam.imgix.net/blog-twitchcon-wirefame-to-reality.png?auto=compress&amp;auto=format&amp;w=1000" alt="Wireframe alongside the finished TwitchCon page" style="display:block; width:100%; height:auto;">
+        </div>
+        <figcaption style="font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:#6a6459; margin-top:10px; line-height:1.5;">Greyscale wireframe to shipped page — the structure survived intact.</figcaption>
+      </figure>
+      <figure style="margin:0;">
+        <div style="border:1.5px solid #16150f; border-radius:16px; overflow:hidden; background:#faf8f3;">
+          <img src="https://cc-dam.imgix.net/blog-twitchcon-fold.png?auto=compress&amp;auto=format&amp;w=1000" alt="Deliberate separation of content above and below the fold" style="display:block; width:100%; height:auto;">
+        </div>
+        <figcaption style="font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:#6a6459; margin-top:10px; line-height:1.5;">The weekend pass earns the space above the fold; detail follows below it.</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <section class="cs-pad" style="max-width:1080px; margin:0 auto; padding:72px 32px 0;">
+    <div class="cs-two" style="display:grid; grid-template-columns:200px 1fr; gap:48px; align-items:start;">
+      <h2 style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.14em; color:#0b6e3c; margin:6px 0 0; text-transform:uppercase;">The outcome</h2>
+      <div>
+        <p style="font-family:'Newsreader',serif; font-size:20px; line-height:1.6; margin:0; color:#26261c;">A wireframing request became a system: components that hold up across cities and years, absorb A/B tests and last-minute streamer additions, and let Twitch's editors change the site themselves as the event approaches. On the Travel and Hotels page they could surface a new discount the moment it landed.</p>
+        <blockquote style="margin:30px 0 0; padding-left:20px; border-left:3px solid #0b6e3c;">
+          <p style="font-family:'Newsreader',serif; font-style:italic; font-size:22px; line-height:1.45; margin:0; color:#26261c;">"What impressed me most was how Vic navigated our complex stakeholder group of 10-12 people."</p>
+          <footer style="font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:.05em; color:#6a6459; margin-top:12px;">CAYVON MORADY — SENIOR TECHNICAL PROGRAM MANAGER, TWITCH</footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <div class="cs-pad" style="max-width:1080px; margin:0 auto; padding:56px 32px 0;">
+    <div style="display:flex; flex-wrap:wrap; gap:10px;">
+      <a href="https://cloudcannon.com/customers/twitchcon/" target="_blank" style="display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:13px; padding:13px 22px; background:#16150f; color:#ece8df; border-radius:100px;" style-hover="background:#0b6e3c; color:#faf8f3;">Read my full write-up ↗</a>
+      <a href="https://www.twitchcon.com/" target="_blank" style="display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:13px; padding:13px 22px; border:1.5px solid #16150f; border-radius:100px;" style-hover="background:#16150f; color:#ece8df;">View the site ↗</a>
+    </div>
+  </div>
+
+  <nav class="cs-pad" style="max-width:1080px; margin:64px auto 0; padding:32px; border-top:1.5px solid #16150f; display:flex; flex-wrap:wrap; gap:20px; justify-content:space-between; align-items:center;">
+    <a href="papercut-partner-portal.html" style="font-family:'IBM Plex Mono',monospace; font-size:12.5px;">← PaperCut Partner Portal</a>
+    <a href="te-tautiaki-hoiho.html" style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:24px; letter-spacing:-.02em;">Next: Te Tautiaki Hoiho →</a>
+  </nav>
+
+  <footer class="cs-pad" style="max-width:1080px; margin:0 auto; padding:40px 32px 60px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:#6a6459;">Victoria Roberts · UX/UI Designer · Dunedin, NZ</footer>
+</div>
+</x-dc>
+</body>
+</html>

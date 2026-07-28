@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Newsreader:opsz,ital,wght@6..72,0,400;6..72,0,500;6..72,1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  a { color: inherit; text-decoration: none; }
+  a:hover { color: #0b6e3c; }
+  @media (max-width: 860px) {
+    .cs-pad { padding-left: 20px !important; padding-right: 20px !important; }
+    .cs-two { grid-template-columns: 1fr !important; gap: 24px !important; }
+    .cs-meta { grid-template-columns: 1fr 1fr !important; }
+    .cs-stats { grid-template-columns: 1fr 1fr !important; }
+  }
+</style>
+</helmet>
+
+<div style="min-height:100vh; background:#ece8df; color:#16150f; font-family:'Public Sans',sans-serif;">
+
+  <nav class="cs-pad" style="position:sticky; top:0; z-index:20; display:flex; align-items:center; justify-content:space-between; padding:18px 32px; background:color-mix(in srgb, #ece8df 80%, transparent); backdrop-filter:blur(7px);">
+    <a href="index.html" style="font-family:'IBM Plex Mono',monospace; font-size:12.5px; letter-spacing:.04em;">← All work</a>
+    <a href="index.html#contact" style="font-family:'IBM Plex Mono',monospace; font-size:12px; padding:8px 15px; border:1.5px solid #16150f; border-radius:100px;" style-hover="background:#16150f; color:#ece8df;">Get in touch</a>
+  </nav>
+
+  <header class="cs-pad" style="max-width:1080px; margin:0 auto; padding:64px 32px 0;">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:12.5px; letter-spacing:.16em; color:#0b6e3c; text-transform:uppercase;">Case study 01</div>
+    <h1 style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:clamp(40px,6.4vw,84px); line-height:.98; letter-spacing:-.03em; margin:18px 0 0; text-wrap:balance;">PaperCut Partner Portal</h1>
+    <p style="font-family:'Newsreader',serif; font-size:clamp(19px,2.1vw,24px); line-height:1.5; max-width:660px; margin:24px 0 0; color:#3a3529;">A global print-software company's partner platform, redesigned from the ground up — so authorised partners can find what they need, and PaperCut's own teams can keep it current without a developer.</p>
+
+    <div class="cs-meta" style="display:grid; grid-template-columns:repeat(4,1fr); gap:0; margin-top:44px; border-top:1.5px solid #16150f; border-bottom:1.5px solid #16150f;">
+      <div style="padding:20px 20px 20px 0; border-right:1px solid #dcd6c9;">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.1em; color:#6a6459;">CLIENT</div>
+        <div style="font-size:15px; font-weight:600; margin-top:6px;">PaperCut</div>
+      </div>
+      <div style="padding:20px; border-right:1px solid #dcd6c9;">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.1em; color:#6a6459;">MY ROLE</div>
+        <div style="font-size:15px; font-weight:600; margin-top:6px;">Sole designer</div>
+      </div>
+      <div style="padding:20px; border-right:1px solid #dcd6c9;">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.1em; color:#6a6459;">TIMELINE</div>
+        <div style="font-size:15px; font-weight:600; margin-top:6px;">2024 — ongoing</div>
+      </div>
+      <div style="padding:20px 0 20px 20px;">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.1em; color:#6a6459;">DELIVERED</div>
+        <div style="font-size:15px; font-weight:600; margin-top:6px;">Research, IA, design system, UI</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="cs-pad" style="max-width:1080px; margin:0 auto; padding:40px 32px 0;">
+    <div style="border:1.5px solid #16150f; border-radius:18px; overflow:hidden; background:#faf8f3;">
+      <img src="https://cc-dam.imgix.net/pc-portal-screen.png?auto=compress&amp;auto=format&amp;w=1600" alt="The PaperCut Partner Portal homepage" style="display:block; width:100%; height:auto;">
+    </div>
+  </div>
+
+  <section class="cs-pad" style="max-width:1080px; margin:0 auto; padding:72px 32px 0;">
+    <div class="cs-two" style="display:grid; grid-template-columns:200px 1fr; gap:48px; align-items:start;">
+      <h2 style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.14em; color:#0b6e3c; margin:6px 0 0; text-transform:uppercase;">The problem</h2>
+      <div>
+        <p style="font-family:'Newsreader',serif; font-size:20px; line-height:1.6; margin:0; color:#26261c;">PaperCut's partners — resellers, support technicians, marketing teams across Singapore, the UK and Australia — relied on the portal for collateral, manuals, training and certifications. But finding anything meant knowing where it already lived, and the previous portal was built in PHP: editors had to open an IDE and edit Bootstrap classes by hand to change a line of text.</p>
+        <p style="font-family:'Newsreader',serif; font-size:20px; line-height:1.6; margin:18px 0 0; color:#26261c;">Two different user groups were stuck. Partners couldn't find things. PaperCut's own teams couldn't fix that without a developer.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-pad" style="max-width:1080px; margin:0 auto; padding:56px 32px 0;">
+    <div class="cs-two" style="display:grid; grid-template-columns:200px 1fr; gap:48px; align-items:start;">
+      <h2 style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.14em; color:#0b6e3c; margin:6px 0 0; text-transform:uppercase;">What I did</h2>
+      <div>
+        <p style="font-family:'Newsreader',serif; font-size:20px; line-height:1.6; margin:0; color:#26261c;">I ran eight interviews with partners across three markets — marketing directors, sales analysts, support technicians — and built three personas and journey maps for the two scenarios that came up in every conversation: <i>a client has asked for collateral</i>, and <i>a reseller needs a manual</i>.</p>
+        <p style="font-family:'Newsreader',serif; font-size:20px; line-height:1.6; margin:18px 0 0; color:#26261c;">The research pointed hard at navigation. Almost every participant said global search would change their workflow; the existing collateral filters were barely used. So I rebuilt the information architecture around finding rather than browsing, prototyped it, and validated the structure over three rounds of usability testing before a single screen was finished.</p>
+        <p style="font-family:'Newsreader',serif; font-size:20px; line-height:1.6; margin:18px 0 0; color:#26261c;">I built the portal's design system on PaperCut's own product foundations, so the portal reads as part of their wider brand rather than a bolt-on — then designed the collateral library, order forms and sales databases on top of it.</p>
+
+        <div style="display:flex; flex-wrap:wrap; gap:9px; margin-top:26px;">
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; padding:5px 13px; border:1px solid #dcd6c9; border-radius:100px; background:#faf8f3;">8 partner interviews</span>
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; padding:5px 13px; border:1px solid #dcd6c9; border-radius:100px; background:#faf8f3;">3 personas</span>
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; padding:5px 13px; border:1px solid #dcd6c9; border-radius:100px; background:#faf8f3;">2 journey maps</span>
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; padding:5px 13px; border:1px solid #dcd6c9; border-radius:100px; background:#faf8f3;">3 rounds usability testing</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cs-pad" style="max-width:1080px; margin:0 auto; padding:56px 32px 0;">
+    <div class="cs-two" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+      <figure style="margin:0;">
+        <div style="border:1.5px solid #16150f; border-radius:16px; overflow:hidden; background:#faf8f3;">
+          <img src="https://cc-dam.imgix.net/pc-portal-components.png?auto=compress&amp;auto=format&amp;w=1000" alt="The portal assembled from editable components" style="display:block; width:100%; height:auto;">
+        </div>
+        <figcaption style="font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:#6a6459; margin-top:10px; line-height:1.5;">Every page is built from the component set — editors compose, they don't code.</figcaption>
+      </figure>
+      <figure style="margin:0;">
+        <div style="border:1.5px solid #16150f; border-radius:16px; overflow:hidden; background:#faf8f3;">
+          <img src="https://cc-dam.imgix.net/pc-portal-variant.png?auto=compress&amp;auto=format&amp;w=1000" alt="Role-based content variations in the portal" style="display:block; width:100%; height:auto;">
+        </div>
+        <figcaption style="font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:#6a6459; margin-top:10px; line-height:1.5;">Partners see different content by role — designed so one page can serve several audiences.</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <section class="cs-pad" style="max-width:1080px; margin:0 auto; padding:72px 32px 0;">
+    <div class="cs-two" style="display:grid; grid-template-columns:200px 1fr; gap:48px; align-items:start;">
+      <h2 style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.14em; color:#0b6e3c; margin:6px 0 0; text-transform:uppercase;">The outcome</h2>
+      <div>
+        <p style="font-family:'Newsreader',serif; font-size:20px; line-height:1.6; margin:0; color:#26261c;">Monthly visits rose from around 15,000 to 18,200 after launch. Five PaperCut teams now manage their own areas of the portal, with 25+ active editors publishing directly — no developer in the loop. Partners gave direct, unprompted feedback on how much easier it is to use.</p>
+        <div class="cs-stats" style="display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin-top:30px; border:1.5px solid #16150f; border-radius:14px; overflow:hidden;">
+          <div style="padding:20px 18px; border-right:1.5px solid #16150f;">
+            <div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:36px; color:#0b6e3c; line-height:1;">+21%</div>
+            <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.06em; color:#6a6459; margin-top:6px;">MONTHLY PORTAL VISITS</div>
+          </div>
+          <div style="padding:20px 18px; border-right:1.5px solid #16150f;">
+            <div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:36px; color:#0b6e3c; line-height:1;">25+</div>
+            <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.06em; color:#6a6459; margin-top:6px;">EDITORS PUBLISHING DIRECTLY</div>
+          </div>
+          <div style="padding:20px 18px;">
+            <div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:36px; color:#0b6e3c; line-height:1;">5</div>
+            <div style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.06em; color:#6a6459; margin-top:6px;">TEAMS SELF-SERVING</div>
+          </div>
+        </div>
+        <blockquote style="margin:30px 0 0; padding-left:20px; border-left:3px solid #0b6e3c;">
+          <p style="font-family:'Newsreader',serif; font-style:italic; font-size:22px; line-height:1.45; margin:0; color:#26261c;">"With the new Portal, our teams are empowered to make the changes we need. It's a game-changer, and it feels like a breath of fresh air."</p>
+          <footer style="font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:.05em; color:#6a6459; margin-top:12px;">LISA COLE MILLER — GLOBAL CHANNEL ACTIVATION TEAM LEAD, PAPERCUT</footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <div class="cs-pad" style="max-width:1080px; margin:0 auto; padding:56px 32px 0;">
+    <a href="https://cloudcannon.com/customers/papercut-partner-portal/" target="_blank" style="display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:13px; padding:13px 22px; background:#16150f; color:#ece8df; border-radius:100px;" style-hover="background:#0b6e3c; color:#faf8f3;">Read CloudCannon's write-up ↗</a>
+  </div>
+
+  <nav class="cs-pad" style="max-width:1080px; margin:64px auto 0; padding:32px; border-top:1.5px solid #16150f; display:flex; flex-wrap:wrap; gap:20px; justify-content:space-between; align-items:center;">
+    <a href="index.html" style="font-family:'IBM Plex Mono',monospace; font-size:12.5px;">← All work</a>
+    <a href="twitchcon.html" style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:24px; letter-spacing:-.02em;">Next: TwitchCon →</a>
+  </nav>
+
+  <footer class="cs-pad" style="max-width:1080px; margin:0 auto; padding:40px 32px 60px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:#6a6459;">Victoria Roberts · UX/UI Designer · Dunedin, NZ</footer>
+</div>
+</x-dc>
+</body>
+</html>
