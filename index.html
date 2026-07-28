@@ -69,6 +69,8 @@
   @keyframes vr-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(7px); } }
   html, body { max-width: 100%; overflow-x: clip; }
   img, svg, canvas { max-width: 100%; }
+  image-slot { display: block; width: 100%; height: 100%; max-width: 100%; overflow: hidden; }
+  .vr-gallery a > div, .vr-case-media > div { max-width: 100%; overflow: hidden; }
   .vr-case > div, .vr-case-media, .vr-two > *, .vr-kitgrid > * { min-width: 0; }
   @media (max-width: 860px) {
     .vr-shot { overflow: hidden !important; }
