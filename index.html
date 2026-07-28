@@ -67,8 +67,18 @@
   [data-theme="electrica"]{ --bg:#e8e6f6; --paper:#fbfaff; --ink:#151233; --muted:#6a6785; --line:#d6d2ec; --accent:#4b2ee6; --accent-ink:#fff; --band:#151233; --band-ink:#f1effb; }
   @keyframes vr-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
   @keyframes vr-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(7px); } }
+  html, body { max-width: 100%; overflow-x: clip; }
+  img, svg, canvas { max-width: 100%; }
+  .vr-case > div, .vr-case-media, .vr-two > *, .vr-kitgrid > * { min-width: 0; }
   @media (max-width: 860px) {
-    .vr-nav-links { display: none !important; }
+    .vr-shot { overflow: hidden !important; }
+    .vr-mock { aspect-ratio: 4/3 !important; }
+    .vr-statgrid { grid-template-columns: 1fr 1fr !important; }
+    .vr-statgrid > * { border-right: none !important; }
+    #vr-nav { flex-wrap: wrap; row-gap: 10px; padding: 12px 20px !important; }
+    #vr-nav > div { display: contents; }
+    .vr-nav-links { gap: 16px !important; font-size: 11.5px !important; order: 3; width: 100%; justify-content: space-between; }
+    .vr-nav-links a { padding: 7px 0; }
     .vr-case { grid-template-columns: 1fr !important; gap: 28px !important; padding: 44px 0 !important; }
     .vr-case .vr-case-media { order: 2 !important; }
     .vr-case .vr-case-body { order: 1 !important; }
@@ -194,7 +204,7 @@
     <!-- CASE 02 — JETSTREAM -->
     <article data-reveal class="vr-case" style="display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; padding:64px 0; border-bottom:1px solid var(--line);">
       <div class="vr-case-media" style="order:2; display:flex; flex-direction:column; gap:16px;">
-        <div style="position:relative; aspect-ratio:16/10; border:1.5px solid var(--ink); border-radius:16px; overflow:hidden; background:#0f0a1e; display:flex; flex-direction:column;">
+        <div style="position:relative; aspect-ratio:16/10; border:1.5px solid var(--ink); border-radius:16px; overflow:hidden; background:#0f0a1e; display:flex; flex-direction:column;" class="vr-mock">
           <div style="flex:0 0 auto; display:flex; align-items:center; gap:7px; padding:9px 13px; background:var(--paper); border-bottom:1.5px solid var(--ink);">
             <span style="width:9px; height:9px; border-radius:50%; background:#ec6a5e;"></span>
             <span style="width:9px; height:9px; border-radius:50%; background:#f4bf4f;"></span>
@@ -205,7 +215,7 @@
               <button onClick="{{ setJetDark }}" title="Dark mode" style="{{ jetDarkBtnStyle }}">Dark</button>
             </div>
           </div>
-          <div style="flex:1; overflow-y:auto; overflow-x:hidden; position:relative; background:#0f0a1e;">
+          <div class="vr-shot" style="flex:1; overflow-y:auto; overflow-x:hidden; position:relative; background:#0f0a1e;">
             <img src="assets/js-fullpage.jpg" alt="Jetstream template — dark mode" style="display:block; width:100%; height:auto;">
             <img src="assets/js-fullpage-light.jpg" alt="Jetstream template — light mode" style="position:absolute; top:0; left:0; width:100%; height:auto; transition:opacity .35s ease; opacity:{{ jetLightOpacity }};">
           </div>
@@ -263,7 +273,7 @@
         </div>
       </div>
       <div class="vr-case-media" style="display:flex; flex-direction:column; gap:16px;">
-        <div style="position:relative; aspect-ratio:16/10; border:1.5px solid var(--ink); border-radius:16px; overflow:hidden; background:#161514; display:flex; flex-direction:column;">
+        <div style="position:relative; aspect-ratio:16/10; border:1.5px solid var(--ink); border-radius:16px; overflow:hidden; background:#161514; display:flex; flex-direction:column;" class="vr-mock">
           <div style="flex:0 0 auto; display:flex; align-items:center; gap:7px; padding:9px 13px; background:var(--paper); border-bottom:1.5px solid var(--ink);">
             <span style="width:9px; height:9px; border-radius:50%; background:#ec6a5e;"></span>
             <span style="width:9px; height:9px; border-radius:50%; background:#f4bf4f;"></span>
@@ -274,7 +284,7 @@
               <button onClick="{{ setDocsDark }}" title="Dark mode" style="{{ docsDarkBtnStyle }}">Dark</button>
             </div>
           </div>
-          <div style="flex:1; overflow-y:auto; overflow-x:hidden; position:relative; background:#161514;">
+          <div class="vr-shot" style="flex:1; overflow-y:auto; overflow-x:hidden; position:relative; background:#161514;">
             <img src="assets/docs-page-dark.jpg" alt="Documentation — dark mode" style="display:block; width:100%; height:auto;">
             <img src="assets/docs-page-light.jpg" alt="Documentation — light mode" style="position:absolute; top:0; left:0; width:100%; height:auto; transition:opacity .35s ease; opacity:{{ docsLightOpacity }};">
           </div>

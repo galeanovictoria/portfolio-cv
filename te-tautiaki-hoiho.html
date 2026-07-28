@@ -18,7 +18,10 @@
   a:hover { color: #0b6e3c; }
   @media (max-width: 860px) {
     .cs-pad { padding-left: 20px !important; padding-right: 20px !important; }
-    .cs-nav-links { display: none !important; }
+    .cs-nav { flex-wrap: wrap; row-gap: 10px; padding: 12px 20px !important; }
+    .cs-nav > div { display: contents; }
+    .cs-nav-links { gap: 16px !important; font-size: 11.5px !important; order: 3; width: 100%; justify-content: space-between; }
+    .cs-nav-links a { padding: 7px 0; }
     .cs-two { grid-template-columns: 1fr !important; gap: 24px !important; }
     .cs-meta { grid-template-columns: 1fr 1fr !important; }
     .cs-stats { grid-template-columns: 1fr 1fr !important; }

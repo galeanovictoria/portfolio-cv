@@ -33,6 +33,8 @@
   .cv-nav .cv-back { font-size: 12px; letter-spacing: .04em; padding: 9px 16px 9px 13px; border: 1.5px solid #16150f; border-radius: 100px; }
   .cv-nav .cv-back:hover { background: #16150f; color: #ece8df; }
   @media print { .cv-nav { display: none !important; } }
+  @media screen and (max-width: 900px) { doc-page { zoom: 0.62; } .cv-hint { display: block !important; } }
+  @media screen and (max-width: 560px) { doc-page { zoom: 0.44; } }
 </style>
 <template id="__bundler_thumbnail" data-bg-color="#0b6e3c">
   <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
@@ -46,6 +48,7 @@
   <a href="index.html" style="display:flex; flex-direction:column; gap:1px; font-family:'Archivo',sans-serif; font-weight:800; font-size:16px; letter-spacing:-.01em; line-height:1;">Victoria Roberts<span style="font-family:'IBM Plex Mono',monospace; font-weight:400; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:#6a6459;">UX/UI Designer</span></a>
   <a class="cv-back" href="index.html">← Back to all work</a>
 </nav>
+<p class="cv-hint" style="display:none; margin:0; padding:12px 28px; background:#f7f3ea; border-bottom:1px solid #dcd6c9; font-family:'IBM Plex Mono',monospace; font-size:11.5px; line-height:1.5; color:#6a6459;">Scaled to fit your screen — best read on a larger display, or print to PDF.</p>
 <doc-page size="letter" margin="0.55in">
 
   <!-- HEADER -->
