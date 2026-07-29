@@ -1,0 +1,41 @@
+{
+  "logoText": "Victoria Roberts",
+  "logoSubtext": "UX/UI Designer",
+  "logoAlt": "Victoria Roberts",
+  "themeToggle": true,
+  "paletteSwitcher": false,
+  "navData": [
+    {
+      "name": "Work",
+      "path": "/#work",
+      "children": []
+    },
+    {
+      "name": "About",
+      "path": "/#about",
+      "children": []
+    },
+    {
+      "name": "Writing",
+      "path": "/#writing",
+      "children": []
+    },
+    {
+      "name": "Contact",
+      "path": "/#contact",
+      "children": []
+    }
+  ],
+  "buttonSections": [
+    {
+      "_component": "building-blocks/core-elements/button",
+      "text": "CV ↗",
+      "hideText": false,
+      "link": "/cv/",
+      "iconName": "",
+      "iconPosition": "before",
+      "variant": "tertiary",
+      "size": "sm"
+    }
+  ]
+}

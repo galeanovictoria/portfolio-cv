@@ -1,0 +1,48 @@
+/* Font families: `--font-body`, `--font-headings`, `--font-serif` and `--font-mono`
+   are defined by Astro’s <Font /> (see `site-fonts.mjs`). */
+
+:where(:root) {
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.8125rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.1875rem;
+  --font-size-xl: 1.375rem;
+  --font-size-2xl: 1.625rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-5xl: 2.625rem;
+
+  /* Display sizes are fluid so the type keeps its poster-like scale from phone
+     to ultrawide without stepping. That also means no mobile overrides below. */
+  --font-size-heading-xs: 1.25rem;
+  --font-size-heading-sm: 1.5rem;
+  --font-size-heading-md: clamp(1.5rem, 2.4vw, 1.875rem);
+  --font-size-heading-lg: clamp(1.625rem, 3vw, 2.125rem);
+  --font-size-heading-xl: clamp(1.75rem, 4.2vw, 3.25rem);
+  --font-size-heading-2xl: clamp(2rem, 4.5vw, 3.75rem);
+  --font-size-heading-3xl: clamp(2.875rem, 8.2vw, 7.25rem);
+  --font-size-heading-4xl: clamp(2.5rem, 9vw, 7.5rem);
+  --font-size-heading-5xl: clamp(3rem, 10vw, 8.5rem);
+
+  --font-weight-normal: 400;
+  --font-weight-semibold: 500;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  /* Display type is set tight; mono labels are set wide. */
+  --letter-spacing-display: -0.03em;
+  --letter-spacing-heading: -0.02em;
+  --letter-spacing-label: 0.14em;
+  --letter-spacing-label-wide: 0.18em;
+
+  @media (width < 640px) {
+    --font-size-xs: 0.6875rem;
+    --font-size-sm: 0.75rem;
+    --font-size-md: 0.9375rem;
+    --font-size-lg: 1.0625rem;
+    --font-size-xl: 1.1875rem;
+    --font-size-2xl: 1.375rem;
+    --font-size-3xl: 1.625rem;
+    --font-size-4xl: 1.875rem;
+  }
+}

@@ -1,0 +1,261 @@
+---
+import CustomSection from "@builders/custom-section/CustomSection.astro";
+import Bar from "@components/navigation/bar/Bar.astro";
+import Mobile from "@components/navigation/mobile/Mobile.astro";
+import PaletteSwitcher from "@components/navigation/palette-switcher/PaletteSwitcher.astro";
+import ThemeToggle from "@components/navigation/theme-toggle/ThemeToggle.astro";
+import Image from "@core-elements/image/Image.astro";
+import ButtonGroup from "@wrappers/button-group/ButtonGroup.astro";
+import paletteData from "@data/palettes.json";
+
+type NavButton = {
+  text?: string;
+  /** Button schema uses `link`; legacy entries may use `href`. */
+  link?: string;
+  href?: string;
+  [key: string]: unknown;
+};
+
+const {
+  logoSource,
+  logoAlternateSource,
+  logoAlt = "logo",
+  /** Wordmark alternative to an image logo — the name plus a role line. */
+  logoText,
+  logoSubtext,
+  navData = [],
+  buttonSections = [] as NavButton[],
+  themeToggle = false,
+  paletteSwitcher = false,
+  class: className,
+  useDefaultEditableBinding: _useDefaultEditableBinding = false,
+  _component,
+  ...htmlAttributes
+} = Astro.props;
+
+// The buttons stay visible outside the drawer at every width, so the drawer
+// only carries the nav links — duplicating them would give two ways to reach
+// the same page from the same screen.
+const mobileNavData = navData;
+---
+
+<!-- The header spans the viewport rather than the content column, so the
+  wordmark and controls sit near the edges as they do in the design. -->
+<CustomSection
+  maxContentWidth="none"
+  paddingHorizontal="xl"
+  paddingVertical="none"
+  class:list={["main-nav", className]}
+  {...htmlAttributes}
+  useDefaultEditableBinding={false}
+>
+  <a
+    href="/"
+    class="main-nav-logo-link"
+  >
+    {
+      logoText ? (
+        <span class="main-nav-wordmark">
+          <span class="main-nav-wordmark-name">{logoText}</span>
+          {logoSubtext && <span class="main-nav-wordmark-role">{logoSubtext}</span>}
+        </span>
+      ) : (
+        <Image
+          source={logoSource}
+          alternateSource={logoAlternateSource}
+          class="main-nav-logo"
+          alt={logoAlt}
+          useDefaultEditableBinding={false}
+        />
+      )
+    }
+  </a>
+  <div class="nav-end">
+    <Bar
+      navData={navData}
+      class="desktop-main-nav"
+    />
+
+    {
+      paletteSwitcher && (
+        <PaletteSwitcher
+          class="desktop-palette-switcher"
+          palettes={paletteData.palettes}
+          defaultPalette={paletteData.defaultPalette}
+          legend={paletteData.legend}
+        />
+      )
+    }
+    {themeToggle && <ThemeToggle />}
+    <ButtonGroup
+      direction="row"
+      align="center"
+      class="desktop-button-group"
+      buttonSections={buttonSections}
+      useDefaultEditableBinding={false}
+    />
+  </div>
+  <Mobile
+    logoSource={logoSource}
+    logoAlternateSource={logoAlternateSource}
+    logoAlt={logoAlt}
+    navData={mobileNavData}
+    class="mobile-main-nav"
+    useDefaultEditableBinding={false}
+  />
+</CustomSection>
+
+<script>
+  import { onPageLoad } from "@component-utils/onPageLoad";
+
+  const initNavScrollState = () => {
+    const navs = document.querySelectorAll<HTMLElement>(".main-nav");
+
+    if (!navs.length) return;
+
+    const sync = () => {
+      const scrolled = window.scrollY > 40;
+
+      navs.forEach((nav) => nav.toggleAttribute("data-scrolled", scrolled));
+    };
+
+    window.addEventListener("scroll", sync, { passive: true });
+    sync();
+  };
+
+  onPageLoad(initNavScrollState);
+</script>
+
+<style is:global>
+  @layer page-sections {
+    .main-nav {
+      background-color: var(--color-bg);
+      padding-block: 0;
+      position: sticky;
+      top: 0;
+      z-index: var(--layer-2);
+
+      /* Narrow screens use the drawer for the links. The button group is
+         deliberately not hidden — the CV link stays reachable in the bar. */
+      .desktop-main-nav,
+      .desktop-palette-switcher {
+        @container (max-width: 768px) {
+          display: none;
+        }
+      }
+
+      .nav-hamburger.mobile-button {
+        @container (min-width: 769px) {
+          display: none;
+        }
+      }
+
+      > .outer-content > .content {
+        align-items: center;
+        container-type: inline-size;
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-md);
+        height: 5rem;
+
+        > .main-nav-logo-link {
+          align-items: center;
+          color: var(--color-text-strong);
+          display: flex;
+          flex: 0 1 min(14rem, 100%);
+          min-width: 0;
+          text-decoration: none;
+          width: min(14rem, 100%);
+        }
+
+        > .main-nav-logo-link > .main-nav-wordmark {
+          display: flex;
+          flex-direction: column;
+          gap: 1px;
+          line-height: 1;
+
+          > .main-nav-wordmark-name {
+            font-family: var(--font-headings);
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-extrabold);
+            letter-spacing: -0.01em;
+          }
+
+          > .main-nav-wordmark-role {
+            color: var(--color-text-muted);
+            font-family: var(--font-mono);
+            font-size: var(--font-size-xs);
+            letter-spacing: var(--letter-spacing-label);
+            text-transform: uppercase;
+          }
+        }
+
+        > .main-nav-logo-link > .main-nav-logo {
+          display: flex;
+          margin-top: 0 !important;
+          max-width: none;
+          width: 100%;
+        }
+
+        > .main-nav-logo-link > .main-nav-logo > .image-inner {
+          width: 100%;
+        }
+
+        > .main-nav-logo-link > .main-nav-logo picture {
+          display: block;
+          width: 100%;
+        }
+
+        > .main-nav-logo-link > .main-nav-logo img,
+        > .main-nav-logo-link > .main-nav-logo svg {
+          display: block;
+          height: 2rem;
+          max-width: 100%;
+          width: auto;
+        }
+
+        .button-group {
+          margin-top: 0;
+        }
+      }
+
+      > .outer-content > .content > .nav-end {
+        align-items: center;
+        display: flex;
+        flex-shrink: 0;
+        gap: var(--spacing-md);
+        justify-content: flex-end;
+        margin-left: auto;
+
+        > .button-group {
+          container-type: normal;
+        }
+
+        > .desktop-palette-switcher {
+          border-left: 1px solid var(--color-border);
+          padding-left: var(--spacing-sm);
+        }
+      }
+
+      /* Narrow: wordmark on the left, then the CV button and the drawer toggle.
+         The hamburger label is a flex child of the bar; `.nav-end` keeps its
+         auto margin so the pair sits together on the right. */
+      @container (max-width: 768px) {
+        > .outer-content > .content {
+          gap: var(--spacing-sm);
+          height: 4.5rem;
+
+          > .main-nav-logo-link {
+            flex: 1 1 auto;
+            min-width: 0;
+            width: auto;
+          }
+
+          > .nav-end {
+            gap: var(--spacing-sm);
+          }
+        }
+      }
+    }
+  }
+</style>

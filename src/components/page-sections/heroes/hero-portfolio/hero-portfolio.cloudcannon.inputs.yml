@@ -1,0 +1,50 @@
+eyebrow:
+  type: text
+  comment: Small monospaced label above the headline.
+headingLead:
+  type: text
+  label: Headline
+  comment: The opening of the headline, before the rotating word.
+rotatingWords:
+  type: array
+  label: Rotating words
+  comment: Words cycled at the end of the headline. Add one to keep it static; visitors who prefer reduced motion always see the first.
+  options:
+    structures: _structures.wordItems
+headingTrail:
+  type: text
+  label: Headline ending
+  comment: Optional text after the rotating word.
+rotateInterval:
+  type: number
+  label: Rotation speed
+  comment: Milliseconds each word is shown.
+  options:
+    min: 800
+    max: 8000
+    step: 100
+subtext:
+  type: markdown
+  label: Lede
+  comment: Supporting paragraph beneath the headline.
+  options:
+    blockquote: false
+    bold: true
+    format:
+    italic: true
+    link: true
+    bulletedlist: false
+    numberedlist: false
+buttonSections:
+  type: array
+  comment: Button blocks for calls to action.
+  options:
+    structures: _structures.buttonSections
+patternSource:
+  type: image
+  label: Background pattern
+  comment: A tiling line-art pattern revealed by a spotlight that follows the pointer. Leave empty for a plain background.
+  options:
+    paths:
+      uploads: public/assets
+      static: public

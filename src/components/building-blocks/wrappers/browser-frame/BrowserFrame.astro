@@ -1,0 +1,290 @@
+---
+import Image from "@core-elements/image/Image.astro";
+
+/**
+ * A browser chrome mock: traffic lights, a URL pill, and an optional
+ * Light / Dark segmented control that cross-fades between two screenshots.
+ *
+ * Used on the home page to show the same work in both colour schemes.
+ */
+const {
+  url = "",
+  lightImageSource = "",
+  lightImageAlt = "",
+  darkImageSource = "",
+  darkImageAlt = "",
+  defaultMode = "light",
+  scrollable = true,
+  surface = "ink",
+  class: className,
+  useDefaultEditableBinding: _useDefaultEditableBinding = false,
+  _component,
+  ...htmlAttributes
+} = Astro.props;
+
+const hasLight = typeof lightImageSource === "string" && lightImageSource.trim() !== "";
+const hasDark = typeof darkImageSource === "string" && darkImageSource.trim() !== "";
+
+if (!_component && !hasLight && !hasDark) return;
+
+// Only offer the control when there is genuinely something to switch between.
+const showToggle = hasLight && hasDark;
+const initialMode = showToggle ? defaultMode : hasLight ? "light" : "dark";
+const frameId = `browser-frame-${crypto.randomUUID()}`;
+---
+
+<div
+  class:list={["browser-frame", `surface-${surface}`, className]}
+  data-browser-frame
+  data-mode={initialMode}
+  {...htmlAttributes}
+>
+  <div class="browser-frame-chrome">
+    <span
+      class="browser-frame-lights"
+      aria-hidden="true"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </span>
+    <span class="browser-frame-url">{url}</span>
+    {
+      showToggle && (
+        <div
+          class="browser-frame-modes"
+          role="group"
+          aria-label="Colour scheme shown in this screenshot"
+        >
+          <button
+            type="button"
+            data-browser-frame-mode="light"
+            aria-pressed={initialMode === "light" ? "true" : "false"}
+            aria-controls={frameId}
+          >
+            Light
+          </button>
+          <button
+            type="button"
+            data-browser-frame-mode="dark"
+            aria-pressed={initialMode === "dark" ? "true" : "false"}
+            aria-controls={frameId}
+          >
+            Dark
+          </button>
+        </div>
+      )
+    }
+  </div>
+  <div
+    class:list={["browser-frame-viewport", scrollable && "scrollable"]}
+    id={frameId}
+  >
+    {
+      hasDark && (
+        <Image
+          class="browser-frame-shot shot-dark"
+          source={darkImageSource}
+          alt={darkImageAlt}
+          data-prop-src="darkImageSource"
+          data-prop-alt="darkImageAlt"
+        />
+      )
+    }
+    {
+      hasLight && (
+        <Image
+          class:list={["browser-frame-shot", "shot-light", hasDark && "overlaid"]}
+          source={lightImageSource}
+          alt={lightImageAlt}
+          data-prop-src="lightImageSource"
+          data-prop-alt="lightImageAlt"
+        />
+      )
+    }
+  </div>
+</div>
+
+<script>
+  import { onPageLoad } from "@component-utils/onPageLoad";
+
+  const initBrowserFrames = () => {
+    const frames = document.querySelectorAll<HTMLElement>("[data-browser-frame]");
+
+    frames.forEach((frame) => {
+      const buttons = frame.querySelectorAll<HTMLButtonElement>("[data-browser-frame-mode]");
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const mode = button.dataset.browserFrameMode;
+
+          if (!mode) return;
+
+          frame.dataset.mode = mode;
+          buttons.forEach((other) => {
+            other.setAttribute(
+              "aria-pressed",
+              other.dataset.browserFrameMode === mode ? "true" : "false"
+            );
+          });
+        });
+      });
+    });
+  };
+
+  onPageLoad(initBrowserFrames);
+</script>
+
+<style is:global>
+  @layer components {
+    .browser-frame {
+      display: flex;
+      flex-direction: column;
+      margin-top: var(--spacing-lg);
+      min-height: 0;
+      overflow: hidden;
+
+      &.surface-ink {
+        background-color: #0f0a1e;
+      }
+
+      &.surface-paper {
+        background-color: var(--color-bg-surface);
+      }
+
+      > .browser-frame-chrome {
+        align-items: center;
+        background-color: var(--color-bg-surface);
+        border-bottom: 1.5px solid var(--color-border-strong);
+        display: flex;
+        flex: 0 0 auto;
+        gap: var(--spacing-sm);
+        padding: 0.55rem 0.8rem;
+
+        > .browser-frame-lights {
+          display: flex;
+          flex: none;
+          gap: 5px;
+
+          > span {
+            border-radius: var(--radius-full);
+            height: 9px;
+            width: 9px;
+
+            &:nth-child(1) {
+              background: #ec6a5e;
+            }
+
+            &:nth-child(2) {
+              background: #f4bf4f;
+            }
+
+            &:nth-child(3) {
+              background: #61c554;
+            }
+          }
+        }
+
+        > .browser-frame-url {
+          background-color: var(--color-bg);
+          border-radius: var(--radius-full);
+          color: var(--color-text-muted);
+          flex: 1;
+          font-family: var(--font-mono);
+          font-size: var(--font-size-xs);
+          min-width: 0;
+          overflow: hidden;
+          padding: 0.25rem 0.75rem;
+          text-align: center;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        > .browser-frame-modes {
+          background-color: var(--color-bg);
+          border-radius: var(--radius-full);
+          display: flex;
+          flex: none;
+          gap: 2px;
+          padding: 2px;
+
+          > button {
+            appearance: none;
+            background: transparent;
+            border: 0;
+            border-radius: var(--radius-full);
+            color: var(--color-text-muted);
+            cursor: pointer;
+            font-family: var(--font-mono);
+            font-size: var(--font-size-xs);
+            line-height: 1;
+            padding: 0.3rem 0.7rem;
+
+            &[aria-pressed="true"] {
+              background-color: var(--color-brand);
+              color: var(--color-brand-on);
+            }
+
+            &:focus-visible {
+              outline: 2px solid var(--color-text-strong);
+              outline-offset: 1px;
+            }
+          }
+        }
+      }
+
+      > .browser-frame-viewport {
+        flex: 1;
+        min-height: 0;
+        overflow: hidden;
+        position: relative;
+
+        &.scrollable {
+          overflow-x: hidden;
+          overflow-y: auto;
+        }
+
+        > .browser-frame-shot {
+          margin-top: 0 !important;
+
+          img {
+            display: block;
+            height: auto;
+            width: 100%;
+          }
+
+          &.overlaid {
+            inset: 0 0 auto;
+            position: absolute;
+            transition: opacity 0.35s ease;
+          }
+        }
+      }
+
+      /* The dark shot sits underneath; the light shot fades over the top. */
+      &[data-mode="dark"] > .browser-frame-viewport > .shot-light.overlaid {
+        opacity: 0;
+      }
+
+      &[data-mode="light"] > .browser-frame-viewport > .shot-light.overlaid {
+        opacity: 1;
+      }
+
+      /* Nested scrolling fights the page scroll on touch, so on small screens
+         the frame shows the top of the screenshot and stays put. */
+      @media (width < 860px) {
+        > .browser-frame-viewport.scrollable {
+          overflow: hidden;
+        }
+      }
+    }
+
+    /* A mock in a fixed-ratio frame gets a squarer crop on narrow screens —
+       16/10 leaves too little height to read anything. */
+    @media (width < 860px) {
+      .framed-media.has-ratio:has(.browser-frame) {
+        aspect-ratio: 4 / 3;
+      }
+    }
+  }
+</style>

@@ -1,0 +1,29 @@
+label: Browser Frame
+icon: web_asset
+description: A browser mock with an address bar and an optional Light/Dark screenshot toggle.
+value:
+  _component: building-blocks/wrappers/browser-frame
+  url: example.com
+  lightImageSource: ""
+  lightImageAlt: ""
+  darkImageSource: ""
+  darkImageAlt: ""
+  defaultMode: light
+  scrollable: true
+  surface: ink
+preview:
+  text:
+    - key: url
+    - Browser Frame
+  subtext:
+    - Browser mock
+  image:
+    - key: lightImageSource
+    - key: darkImageSource
+  icon: web_asset
+picker_preview:
+  text: Browser Frame
+  subtext: A browser mock with an address bar and an optional Light/Dark screenshot toggle.
+  icon: web_asset
+_inputs_from_glob:
+  - /src/components/building-blocks/wrappers/browser-frame/browser-frame.cloudcannon.inputs.yml

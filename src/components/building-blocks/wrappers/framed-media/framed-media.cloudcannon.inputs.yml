@@ -1,0 +1,46 @@
+imageSource:
+  type: image
+  label: Image
+  comment: The image to frame. Leave empty if you are nesting blocks instead.
+  options:
+    paths:
+      uploads: src/assets/images
+      static: ""
+    resize_style: contain
+    width: 1920
+    height: 1280
+imageAlt:
+  type: textarea
+  label: Image alt text
+  comment: What the image shows. Leave empty only if the image is decorative.
+priority:
+  type: switch
+  label: Prioritize image load
+  comment: Load eagerly. Use for media above the fold.
+ratio:
+  type: text
+  label: Aspect ratio
+  comment: A CSS aspect ratio such as "16 / 9", "4 / 3" or "1 / 1". Clear it to size to the content instead.
+border:
+  type: switch
+  comment: Draw the hairline ink border.
+rounded:
+  type: switch
+  comment: Round the corners.
+surface:
+  type: select
+  comment: Colour behind the media while it loads, and behind transparent images.
+  options:
+    values:
+      - id: paper
+        name: Paper
+      - id: ink
+        name: Ink
+      - id: none
+        name: None
+mediaSections:
+  type: array
+  label: Nested blocks
+  comment: Blocks to render inside the frame instead of a plain image — a browser frame, a video, or a carousel.
+  options:
+    structures: _structures.framedMediaSections

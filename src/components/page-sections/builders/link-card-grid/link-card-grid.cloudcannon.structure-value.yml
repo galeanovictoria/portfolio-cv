@@ -1,0 +1,138 @@
+label: Link Card Grid
+icon: grid_view
+description: A row of linked thumbnail cards for smaller pieces of work.
+value:
+  _component: page-sections/builders/link-card-grid
+  sectionLabel: ""
+  cards:
+    - imageSource: ""
+      imageAlt: ""
+      title: Card title
+      meta: CATEGORY
+      link: ""
+      newTab: true
+  columns: 3
+  ratio: 4 / 3
+  maxContentWidth: 2xl
+  paddingHorizontal: lg
+  paddingVertical: 3xl
+  colorScheme: inherit
+  backgroundColor: none
+preview:
+  text:
+    - Link Card Grid
+  subtext:
+    - key: cards[0].title
+    - Add cards
+  image:
+    - key: cards[0].imageSource
+  icon: grid_view
+picker_preview:
+  text: Link Card Grid
+  subtext: A row of linked thumbnail cards for smaller pieces of work.
+  icon: grid_view
+_inputs_from_glob:
+  - /src/components/page-sections/builders/link-card-grid/link-card-grid.cloudcannon.inputs.yml
+_inputs:
+  sectionLabel:
+    type: text
+    comment: Optional label to identify the section in the editor. When set and no HTML id is provided, an id is derived from this value.
+  maxContentWidth:
+    type: select
+    comment: Maximum width constraint for the content.
+    options:
+      values:
+        - id: none
+          name: None
+        - id: xs
+          name: Extra Small
+        - id: sm
+          name: Small
+        - id: md
+          name: Medium
+        - id: lg
+          name: Large
+        - id: xl
+          name: Extra Large
+        - id: 2xl
+          name: 2xl
+        - id: 3xl
+          name: 3xl
+  paddingHorizontal:
+    type: select
+    comment: Horizontal padding applied to the section content.
+    options:
+      values:
+        - id: none
+          name: None
+        - id: xs
+          name: Extra Small
+        - id: sm
+          name: Small
+        - id: md
+          name: Medium
+        - id: lg
+          name: Large
+        - id: xl
+          name: Extra Large
+        - id: 2xl
+          name: 2xl
+        - id: 3xl
+          name: 3xl
+  paddingVertical:
+    type: select
+    comment: Vertical padding applied to the section content.
+    options:
+      values:
+        - id: none
+          name: None
+        - id: xs
+          name: Extra Small
+        - id: sm
+          name: Small
+        - id: md
+          name: Medium
+        - id: lg
+          name: Large
+        - id: xl
+          name: Extra Large
+        - id: 2xl
+          name: 2xl
+        - id: 3xl
+          name: 3xl
+        - id: 4xl
+          name: 4xl
+        - id: 5xl
+          name: 5xl
+        - id: 6xl
+          name: 6xl
+  colorScheme:
+    type: select
+    comment: Color scheme theme for the section wrapper. Dark renders the section as the site's ink band.
+    options:
+      values:
+        - id: inherit
+          name: Inherit
+        - id: light
+          name: Light
+        - id: dark
+          name: Dark
+  lockColorScheme:
+    type: switch
+    comment: Keep the selected color scheme from flipping when the visitor toggles the site theme.
+    hidden: true
+  backgroundColor:
+    type: select
+    comment: Solid background color token behind the section content.
+    options:
+      values:
+        - id: none
+          name: None
+        - id: base
+          name: Base
+        - id: surface
+          name: Surface
+        - id: accent
+          name: Accent
+        - id: highlight
+          name: Highlight

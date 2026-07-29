@@ -1,0 +1,22 @@
+label: Doodle
+icon: gesture
+description: A decorative line-art mark from the doodle library.
+value:
+  _component: building-blocks/core-elements/doodle
+  source: /assets/doodle/stack.svg
+  size: md
+  invertMode: auto
+  alignmentHorizontal: start
+preview:
+  text:
+    - Doodle
+  subtext:
+    - key: source
+    - Choose a mark
+  icon: gesture
+picker_preview:
+  text: Doodle
+  subtext: A decorative line-art mark from the doodle library.
+  icon: gesture
+_inputs_from_glob:
+  - /src/components/building-blocks/core-elements/doodle/doodle.cloudcannon.inputs.yml

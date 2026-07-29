@@ -1,0 +1,128 @@
+---
+/**
+ * A full-bleed accent band of scrolling capability words.
+ *
+ * The list is rendered twice so the loop is seamless; the duplicate is hidden
+ * from screen readers and the animation stops for reduced-motion visitors.
+ */
+type Item = { text?: string } | string;
+
+const {
+  items = [] as Item[],
+  separator = "✳",
+  duration = 40,
+  sectionLabel,
+  class: className,
+  useDefaultEditableBinding = false,
+  "data-children-prop": childrenDataProp,
+  _component,
+  ...htmlAttributes
+} = Astro.props;
+
+const words = (Array.isArray(items) ? items : [])
+  .map((item) => (typeof item === "string" ? item : item?.text))
+  .filter((text): text is string => Boolean(text?.trim()));
+
+const effectiveChildrenProp = childrenDataProp ?? (useDefaultEditableBinding ? "items" : null);
+const arrayDataAttributes = effectiveChildrenProp
+  ? { "data-editable": "array", "data-prop": effectiveChildrenProp, "data-direction": "row" }
+  : {};
+
+if (!_component && words.length === 0) return;
+
+// Short lists need more repeats to fill a wide viewport before the loop resets.
+const repeats = words.length >= 6 ? 2 : 4;
+---
+
+<section
+  class:list={["marquee-band", className]}
+  id={htmlAttributes.id}
+  aria-label={sectionLabel || "Capabilities"}
+  {...htmlAttributes}
+>
+  <div
+    class="marquee-band-track"
+    style={{ "--marquee-duration": `${duration}s` }}
+  >
+    {
+      Array.from({ length: repeats }).map((_unused, repeat) => (
+        <span
+          class="marquee-band-run"
+          aria-hidden={repeat > 0 ? "true" : undefined}
+          {...(repeat === 0 ? arrayDataAttributes : {})}
+        >
+          {words.map((text) => (
+            <span
+              class="marquee-band-item"
+              {...(repeat === 0 ? { "data-editable": "array-item" } : {})}
+            >
+              <span {...(repeat === 0 ? { "data-editable": "text", "data-prop": "text" } : {})}>
+                {text}
+              </span>
+              <span
+                class="marquee-band-separator"
+                aria-hidden="true"
+              >
+                {separator}
+              </span>
+            </span>
+          ))}
+        </span>
+      ))
+    }
+  </div>
+</section>
+
+<style is:global>
+  @layer page-sections {
+    @keyframes marquee-band-scroll {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    .marquee-band {
+      background-color: var(--color-brand);
+      border-block: 1.5px solid var(--color-border-strong);
+      color: var(--color-brand-on);
+      overflow: hidden;
+      padding-block: var(--spacing-md);
+      white-space: nowrap;
+      width: 100%;
+
+      > .marquee-band-track {
+        animation: marquee-band-scroll var(--marquee-duration, 40s) linear infinite;
+        display: inline-block;
+        font-family: var(--font-headings);
+        font-size: var(--font-size-xl);
+        font-weight: var(--font-weight-bold);
+        letter-spacing: -0.01em;
+        white-space: nowrap;
+        will-change: transform;
+
+        > .marquee-band-run {
+          display: inline;
+        }
+
+        .marquee-band-item {
+          padding-inline: var(--spacing-sm);
+        }
+
+        .marquee-band-separator {
+          opacity: 0.5;
+          padding-inline: var(--spacing-lg);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        > .marquee-band-track {
+          animation: none;
+        }
+      }
+    }
+  }
+</style>

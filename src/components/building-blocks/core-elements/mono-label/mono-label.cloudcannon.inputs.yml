@@ -1,0 +1,52 @@
+text:
+  type: text
+  comment: The label text. Markdown inline formatting is supported.
+tone:
+  type: select
+  comment: Colour of the label.
+  options:
+    values:
+      - id: accent
+        name: Accent
+      - id: muted
+        name: Muted
+      - id: ink
+        name: Ink
+      - id: inherit
+        name: Inherit
+size:
+  type: select
+  comment: Label size.
+  options:
+    values:
+      - id: xs
+        name: Extra Small
+      - id: sm
+        name: Small
+      - id: md
+        name: Medium
+tracking:
+  type: select
+  comment: Letter spacing. Wide suits uppercase eyebrows; none suits captions.
+  options:
+    values:
+      - id: none
+        name: None
+      - id: label
+        name: Label
+      - id: wide
+        name: Wide
+uppercase:
+  type: switch
+  comment: Render the label in uppercase.
+alignmentHorizontal:
+  type: select
+  comment: Horizontal text alignment.
+  options:
+    values:
+      - id: start
+        name: Start
+      - id: center
+        name: Center
+      - id: end
+        name: End

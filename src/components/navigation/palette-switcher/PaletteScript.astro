@@ -1,0 +1,32 @@
+---
+/**
+ * Restores the visitor's chosen palette before first paint, so switching
+ * palettes survives navigation without a flash of the default.
+ *
+ * Pairs with PaletteSwitcher.astro, which writes `palette` to localStorage.
+ */
+export interface Props {
+  palettes?: { id: string }[];
+  defaultPalette?: string;
+}
+
+const { palettes = [], defaultPalette = "sol" } = Astro.props;
+const allowed = palettes.map((palette) => palette.id).filter(Boolean);
+---
+
+<script is:inline define:vars={{ allowed, defaultPalette }}>
+  (function () {
+    var root = document.documentElement;
+    var stored = null;
+
+    try {
+      stored = localStorage.getItem("palette");
+    } catch {
+      stored = null;
+    }
+
+    var palette = allowed.indexOf(stored) === -1 ? defaultPalette : stored;
+
+    root.setAttribute("data-palette", palette);
+  })();
+</script>

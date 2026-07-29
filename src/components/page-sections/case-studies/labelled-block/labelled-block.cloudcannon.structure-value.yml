@@ -1,0 +1,134 @@
+label: Labelled Block
+icon: segment
+description: A short label in a narrow column beside a wide column of content.
+value:
+  _component: page-sections/case-studies/labelled-block
+  sectionLabel: ""
+  label: The problem
+  labelLevel: h2
+  contentSections:
+    - _component: building-blocks/core-elements/text
+      text: Describe the situation you were handed.
+      size: lg
+      alignmentHorizontal: start
+  maxContentWidth: xl
+  paddingHorizontal: lg
+  paddingVertical: 2xl
+  colorScheme: inherit
+  backgroundColor: none
+preview:
+  text:
+    - key: label
+    - Labelled Block
+  subtext:
+    - Labelled block
+  icon: segment
+picker_preview:
+  text: Labelled Block
+  subtext: A short label in a narrow column beside a wide column of content.
+  icon: segment
+_inputs_from_glob:
+  - /src/components/page-sections/case-studies/labelled-block/labelled-block.cloudcannon.inputs.yml
+_inputs:
+  sectionLabel:
+    type: text
+    comment: Optional label to identify the section in the editor. When set and no HTML id is provided, an id is derived from this value.
+  maxContentWidth:
+    type: select
+    comment: Maximum width constraint for the content.
+    options:
+      values:
+        - id: none
+          name: None
+        - id: xs
+          name: Extra Small
+        - id: sm
+          name: Small
+        - id: md
+          name: Medium
+        - id: lg
+          name: Large
+        - id: xl
+          name: Extra Large
+        - id: 2xl
+          name: 2xl
+        - id: 3xl
+          name: 3xl
+  paddingHorizontal:
+    type: select
+    comment: Horizontal padding applied to the section content.
+    options:
+      values:
+        - id: none
+          name: None
+        - id: xs
+          name: Extra Small
+        - id: sm
+          name: Small
+        - id: md
+          name: Medium
+        - id: lg
+          name: Large
+        - id: xl
+          name: Extra Large
+        - id: 2xl
+          name: 2xl
+        - id: 3xl
+          name: 3xl
+  paddingVertical:
+    type: select
+    comment: Vertical padding applied to the section content.
+    options:
+      values:
+        - id: none
+          name: None
+        - id: xs
+          name: Extra Small
+        - id: sm
+          name: Small
+        - id: md
+          name: Medium
+        - id: lg
+          name: Large
+        - id: xl
+          name: Extra Large
+        - id: 2xl
+          name: 2xl
+        - id: 3xl
+          name: 3xl
+        - id: 4xl
+          name: 4xl
+        - id: 5xl
+          name: 5xl
+        - id: 6xl
+          name: 6xl
+  colorScheme:
+    type: select
+    comment: Color scheme theme for the section wrapper. Dark renders the section as the site's ink band.
+    options:
+      values:
+        - id: inherit
+          name: Inherit
+        - id: light
+          name: Light
+        - id: dark
+          name: Dark
+  lockColorScheme:
+    type: switch
+    comment: Keep the selected color scheme from flipping when the visitor toggles the site theme.
+    hidden: true
+  backgroundColor:
+    type: select
+    comment: Solid background color token behind the section content.
+    options:
+      values:
+        - id: none
+          name: None
+        - id: base
+          name: Base
+        - id: surface
+          name: Surface
+        - id: accent
+          name: Accent
+        - id: highlight
+          name: Highlight

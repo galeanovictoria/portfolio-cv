@@ -1,0 +1,182 @@
+---
+import CustomSection from "@builders/custom-section/CustomSection.astro";
+import Image from "@core-elements/image/Image.astro";
+
+/**
+ * A row of linked thumbnail cards — the smaller pieces of work that don't need
+ * a full case-study row. Each card is one link, so the whole tile is the
+ * target rather than just the title.
+ */
+type Card = {
+  imageSource?: string;
+  imageAlt?: string;
+  title?: string;
+  meta?: string;
+  link?: string;
+  newTab?: boolean;
+};
+
+const {
+  cards = [] as Card[],
+  columns = 3,
+  ratio = "4 / 3",
+  sectionLabel,
+  maxContentWidth = "2xl",
+  paddingHorizontal = "lg",
+  paddingVertical = "3xl",
+  colorScheme = "inherit",
+  backgroundColor,
+  class: className,
+  useDefaultEditableBinding = false,
+  _component,
+  ...htmlAttributes
+} = Astro.props;
+
+const visibleCards = (Array.isArray(cards) ? cards : []).filter(
+  (card) => card?.title?.trim() || card?.imageSource?.trim()
+);
+---
+
+<CustomSection
+  class:list={["link-card-grid", className]}
+  label={sectionLabel}
+  maxContentWidth={maxContentWidth}
+  paddingHorizontal={paddingHorizontal}
+  paddingVertical={paddingVertical}
+  colorScheme={colorScheme}
+  backgroundColor={backgroundColor}
+  useDefaultEditableBinding={useDefaultEditableBinding}
+  {...htmlAttributes}
+>
+  <ul
+    class="link-card-grid-items"
+    style={{ "--card-columns": String(columns), "--card-ratio": ratio }}
+    data-reveal
+    data-editable="array"
+    data-prop="cards"
+    data-direction="row"
+  >
+    {
+      visibleCards.map((card) => (
+        <li
+          class="link-card"
+          data-editable="array-item"
+        >
+          <a
+            class="link-card-inner"
+            href={card.link || "#"}
+            {...(card.newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+          >
+            <span class="link-card-frame">
+              <Image
+                source={card.imageSource}
+                alt={card.imageAlt || ""}
+                data-prop-src="imageSource"
+                data-prop-alt="imageAlt"
+              />
+            </span>
+            <span
+              class="link-card-title"
+              data-editable="text"
+              data-prop="title"
+            >
+              {card.title}
+            </span>
+            <span
+              class="link-card-meta"
+              data-editable="text"
+              data-prop="meta"
+            >
+              {card.meta}
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</CustomSection>
+
+<style is:global>
+  @layer page-sections {
+    .link-card-grid {
+      > .outer-content > .content > .link-card-grid-items {
+        container-type: inline-size;
+        display: grid;
+        gap: var(--spacing-lg);
+        grid-template-columns: repeat(var(--card-columns, 3), minmax(0, 1fr));
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        > .link-card {
+          min-width: 0;
+
+          > .link-card-inner {
+            color: inherit;
+            display: block;
+            text-decoration: none;
+            transition: transform 0.2s ease;
+
+            &:hover {
+              transform: translateY(-6px);
+
+              .link-card-title {
+                color: var(--color-brand);
+              }
+            }
+
+            > .link-card-frame {
+              aspect-ratio: var(--card-ratio, 4 / 3);
+              background-color: var(--color-bg-surface);
+              border: 1.5px solid var(--color-border-strong);
+              border-radius: var(--radius-lg);
+              display: block;
+              overflow: hidden;
+
+              > .image {
+                height: 100%;
+                margin-top: 0 !important;
+
+                .image-inner,
+                picture {
+                  height: 100%;
+                }
+
+                img {
+                  height: 100%;
+                  object-fit: cover;
+                  width: 100%;
+                }
+              }
+            }
+
+            > .link-card-title {
+              display: block;
+              font-family: var(--font-headings);
+              font-size: var(--font-size-xl);
+              font-weight: var(--font-weight-bold);
+              letter-spacing: var(--letter-spacing-heading);
+              margin-top: var(--spacing-md);
+            }
+
+            > .link-card-meta {
+              color: var(--color-text-muted);
+              display: block;
+              font-family: var(--font-mono);
+              font-size: var(--font-size-xs);
+              margin-top: var(--spacing-xs);
+            }
+          }
+        }
+
+        @container (max-width: 860px) {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        @container (max-width: 520px) {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+    }
+  }
+</style>

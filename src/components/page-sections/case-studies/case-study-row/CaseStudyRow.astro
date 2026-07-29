@@ -1,0 +1,233 @@
+---
+import CustomSection from "@builders/custom-section/CustomSection.astro";
+import Component from "@components/utils/renderBlock.astro";
+import Heading from "@core-elements/heading/Heading.astro";
+import MonoLabel from "@core-elements/mono-label/MonoLabel.astro";
+import StatBar from "@core-elements/stat-bar/StatBar.astro";
+import TagList from "@core-elements/tag-list/TagList.astro";
+import Testimonial from "@core-elements/testimonial/Testimonial.astro";
+import Text from "@core-elements/text/Text.astro";
+import ButtonGroup from "@wrappers/button-group/ButtonGroup.astro";
+
+/**
+ * One entry in the selected-work list: a numbered write-up on one side and
+ * whatever media you nest on the other. Alternate `reverse` down the page so
+ * the numbers zig-zag.
+ *
+ * On narrow screens the write-up always comes first — a visitor should read
+ * what the project is before scrolling past its screenshots.
+ */
+const {
+  number = "",
+  heading = "",
+  headingLevel = "h3",
+  meta = "",
+  description = "",
+  quoteText = "",
+  quoteAttribution = "",
+  tags = [],
+  stats = [],
+  buttonSections = [],
+  mediaSections = [],
+  reverse = false,
+  divider = true,
+  sectionLabel,
+  maxContentWidth = "2xl",
+  paddingHorizontal = "lg",
+  paddingVertical = "3xl",
+  colorScheme = "inherit",
+  backgroundColor,
+  class: className,
+  useDefaultEditableBinding = false,
+  _component,
+  ...htmlAttributes
+} = Astro.props;
+
+const hasQuote = Boolean(quoteText?.trim());
+const hasMedia = Array.isArray(mediaSections) && mediaSections.length > 0;
+---
+
+<CustomSection
+  class:list={["case-study-row", reverse && "reverse", divider && "divided", className]}
+  label={sectionLabel}
+  maxContentWidth={maxContentWidth}
+  paddingHorizontal={paddingHorizontal}
+  paddingVertical={paddingVertical}
+  colorScheme={colorScheme}
+  backgroundColor={backgroundColor}
+  useDefaultEditableBinding={useDefaultEditableBinding}
+  {...htmlAttributes}
+>
+  <article
+    class="case-study-row-inner"
+    data-reveal
+  >
+    <div class="case-study-row-body">
+      {
+        number && (
+          <p
+            class="case-study-row-number"
+            data-editable="text"
+            data-prop="number"
+          >
+            {number}
+          </p>
+        )
+      }
+      <Heading
+        class="case-study-row-heading"
+        level={headingLevel}
+        size="lg"
+        data-prop="heading"
+      >
+        {heading}
+      </Heading>
+      <MonoLabel
+        class="case-study-row-meta"
+        text={meta}
+        tone="muted"
+        size="sm"
+        tracking="none"
+        data-prop="meta"
+      />
+      <Text
+        class="case-study-row-description prose"
+        text={description}
+        data-prop="description"
+      />
+      {
+        hasQuote && (
+          <Testimonial
+            class="case-study-row-quote"
+            text={quoteText}
+            authorName={quoteAttribution}
+            alignmentHorizontal="start"
+            data-prop="quoteText"
+            data-prop-author-name="quoteAttribution"
+          />
+        )
+      }
+      <TagList
+        class="case-study-row-tags"
+        tags={tags}
+        tone="outline"
+        size="sm"
+        data-children-prop="tags"
+      />
+      <StatBar
+        class="case-study-row-stats"
+        stats={stats}
+        variant="boxed"
+        columns={3}
+        size="sm"
+        data-children-prop="stats"
+      />
+      <ButtonGroup
+        class="case-study-row-buttons"
+        buttonSections={buttonSections}
+        data-children-prop="buttonSections"
+      />
+    </div>
+
+    {
+      hasMedia && (
+        <div
+          class="case-study-row-media"
+          data-editable="array"
+          data-prop="mediaSections"
+        >
+          <Component
+            contentSections={mediaSections}
+            useDefaultEditableBinding={true}
+          />
+        </div>
+      )
+    }
+  </article>
+</CustomSection>
+
+<style is:global>
+  @layer page-sections {
+    .case-study-row {
+      > .outer-content > .content > .case-study-row-inner {
+        align-items: center;
+        container-type: inline-size;
+        display: grid;
+        gap: var(--spacing-2xl);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        > .case-study-row-body {
+          min-width: 0;
+
+          > .case-study-row-number {
+            color: var(--color-brand);
+            font-family: var(--font-headings);
+            font-size: var(--font-size-heading-xl);
+            font-weight: var(--font-weight-extrabold);
+            letter-spacing: var(--letter-spacing-display);
+            line-height: 1;
+            margin: 0;
+          }
+
+          > .case-study-row-heading {
+            margin-bottom: 0;
+            margin-top: var(--spacing-sm);
+          }
+
+          > .case-study-row-meta {
+            letter-spacing: 0.03em;
+            margin-top: var(--spacing-sm);
+          }
+
+          > .case-study-row-description p {
+            font-size: var(--font-size-lg);
+          }
+        }
+
+        > .case-study-row-media {
+          display: flex;
+          flex-direction: column;
+          gap: var(--spacing-md);
+          min-width: 0;
+
+          > * {
+            margin-top: 0 !important;
+          }
+        }
+      }
+
+      &.divided > .outer-content > .content > .case-study-row-inner {
+        border-bottom: 1px solid var(--color-border);
+        padding-bottom: var(--spacing-3xl);
+      }
+
+      /* Reversed rows swap the columns without changing source order, so the
+         write-up stays first for keyboard and screen-reader users. */
+      &.reverse > .outer-content > .content > .case-study-row-inner {
+        > .case-study-row-body {
+          order: 2;
+        }
+
+        > .case-study-row-media {
+          order: 1;
+        }
+      }
+
+      @media (width < 860px) {
+        > .outer-content > .content > .case-study-row-inner,
+        &.reverse > .outer-content > .content > .case-study-row-inner {
+          gap: var(--spacing-lg);
+          grid-template-columns: minmax(0, 1fr);
+
+          > .case-study-row-body {
+            order: 1;
+          }
+
+          > .case-study-row-media {
+            order: 2;
+          }
+        }
+      }
+    }
+  }
+</style>

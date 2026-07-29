@@ -1,0 +1,76 @@
+eyebrow:
+  type: text
+  comment: Small monospaced label above the heading.
+heading:
+  type: text
+  comment: The headline for this section.
+headingLevel:
+  type: select
+  comment: Heading level. Keep the page order logical.
+  options:
+    values:
+      - id: h2
+        name: H2
+      - id: h3
+        name: H3
+body:
+  type: markdown
+  label: Biography
+  comment: The main serif biography. Several paragraphs is normal here.
+  options:
+    blockquote: false
+    bold: true
+    format:
+    italic: true
+    link: true
+    bulletedlist: false
+    numberedlist: false
+aside:
+  type: markdown
+  label: Closing aside
+  comment: An optional lighter closing line, set in italics.
+  options:
+    blockquote: false
+    bold: false
+    format:
+    italic: true
+    link: false
+    bulletedlist: false
+    numberedlist: false
+imageSource:
+  type: image
+  label: Portrait
+  comment: A photo of the person.
+  options:
+    paths:
+      uploads: src/assets/images
+      static: ""
+    resize_style: contain
+    width: 1200
+    height: 1500
+imageAlt:
+  type: textarea
+  label: Portrait alt text
+  comment: What the photo shows.
+imageRatio:
+  type: text
+  label: Portrait aspect ratio
+  comment: A CSS aspect ratio such as "4 / 5" or "1 / 1".
+skills:
+  type: array
+  comment: Skill pills shown beneath the portrait.
+  options:
+    structures: _structures.tagItems
+stats:
+  type: array
+  comment: Career figures shown beneath the biography.
+  options:
+    structures: _structures.statItems
+doodleSource:
+  type: image
+  label: Doodle
+  comment: Optional decorative mark above the heading. It inverts automatically on dark sections.
+  options:
+    paths:
+      uploads: public/assets/doodle
+      static: public

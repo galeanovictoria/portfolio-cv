@@ -1,0 +1,85 @@
+/* Site palettes.
+   Each palette is a set of raw ink/paper/accent values. The light and dark
+   themes (see themes/_light.css and themes/_dark.css) map these onto the
+   component token names, so switching palette restyles every component.
+   The active palette lives in `data-palette` on <html>; see
+   navigation/palette-switcher. */
+
+:where(:root),
+[data-palette="sol"] {
+  --palette-bg: #ece8df;
+  --palette-paper: #faf8f3;
+  --palette-ink: #16150f;
+  --palette-ink-soft: #26261c;
+  --palette-muted: #6a6459;
+  --palette-line: #dcd6c9;
+  --palette-accent: #0b6e3c;
+  --palette-accent-ink: #faf8f3;
+  --palette-band: #16150f;
+  --palette-band-ink: #f4efe4;
+}
+
+[data-palette="pampa"] {
+  --palette-bg: #efe6d9;
+  --palette-paper: #fbf6ee;
+  --palette-ink: #241a12;
+  --palette-ink-soft: #37271b;
+  --palette-muted: #7a6a58;
+  --palette-line: #e2d5c3;
+  --palette-accent: #c4562f;
+  --palette-accent-ink: #fff;
+  --palette-band: #241a12;
+  --palette-band-ink: #fbf6ee;
+}
+
+[data-palette="tinta"] {
+  --palette-bg: #f1f0ed;
+  --palette-paper: #fff;
+  --palette-ink: #0a0a0a;
+  --palette-ink-soft: #1c1c1c;
+  --palette-muted: #6b6b6b;
+  --palette-line: #ddd;
+  --palette-accent: #ec1c2b;
+  --palette-accent-ink: #fff;
+  --palette-band: #0a0a0a;
+  --palette-band-ink: #f1f0ed;
+}
+
+[data-palette="marea"] {
+  --palette-bg: #e5ecea;
+  --palette-paper: #f7fbfa;
+  --palette-ink: #0f1a19;
+  --palette-ink-soft: #1d2e2c;
+  --palette-muted: #5f7370;
+  --palette-line: #cddbd8;
+  --palette-accent: #0a6b63;
+  --palette-accent-ink: #f7fbfa;
+  --palette-band: #0f1a19;
+  --palette-band-ink: #eaf3f1;
+}
+
+[data-palette="coral"] {
+  --palette-bg: #f1e8e6;
+  --palette-paper: #fdf7f6;
+  --palette-ink: #1e1214;
+  --palette-ink-soft: #312024;
+  --palette-muted: #7a6165;
+  --palette-line: #e3d0cd;
+  --palette-accent: #b82e52;
+  --palette-accent-ink: #fff;
+  --palette-band: #1e1214;
+  --palette-band-ink: #fbeeec;
+}
+
+[data-palette="electrica"] {
+  --palette-bg: #e8e6f6;
+  --palette-paper: #fbfaff;
+  --palette-ink: #151233;
+  --palette-ink-soft: #241f47;
+  --palette-muted: #6a6785;
+  --palette-line: #d6d2ec;
+  --palette-accent: #4b2ee6;
+  --palette-accent-ink: #fff;
+  --palette-band: #151233;
+  --palette-band-ink: #f1effb;
+}

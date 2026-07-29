@@ -1,0 +1,32 @@
+stats:
+  type: array
+  comment: The figures to display, in order.
+  options:
+    structures: _structures.statItems
+variant:
+  type: select
+  comment: Boxed draws an ink-ruled panel. Plain draws a single rule above the row — better on inverted sections.
+  options:
+    values:
+      - id: boxed
+        name: Boxed
+      - id: plain
+        name: Plain
+columns:
+  type: number
+  comment: Number of columns on wide screens. Collapses to two on narrow ones.
+  options:
+    min: 1
+    max: 6
+    step: 1
+size:
+  type: select
+  comment: Size of the figures.
+  options:
+    values:
+      - id: sm
+        name: Small
+      - id: md
+        name: Medium
+      - id: lg
+        name: Large

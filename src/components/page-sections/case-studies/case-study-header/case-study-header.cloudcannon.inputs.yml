@@ -1,0 +1,34 @@
+backLabel:
+  type: text
+  label: Back link text
+  comment: Route back to the work listing, shown above the title. Both the text and the link are needed for it to appear.
+backLink:
+  type: url
+  label: Back link
+  comment: Where the back link goes.
+  options:
+    hide_link_to_email_address: true
+    hide_link_to_telephone: true
+eyebrow:
+  type: text
+  comment: Small monospaced label above the title, such as "Case study 01".
+heading:
+  type: text
+  comment: The case-study title. Rendered as the page's h1.
+lede:
+  type: markdown
+  comment: A one-paragraph summary of the project.
+  options:
+    blockquote: false
+    bold: true
+    format:
+    italic: true
+    link: true
+    bulletedlist: false
+    numberedlist: false
+metaItems:
+  type: array
+  label: Facts
+  comment: Client, role, timeline, and what you delivered.
+  options:
+    structures: _structures.metaItems

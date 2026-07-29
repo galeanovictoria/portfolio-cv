@@ -1,0 +1,151 @@
+---
+/**
+ * Colour palette switcher — a row of accent dots that swap the site's palette.
+ *
+ * Palettes are defined in styles/variables/_palettes.css and selected via
+ * `data-palette` on <html>. The choice is stored in localStorage and restored
+ * before paint by PaletteScript.astro.
+ */
+export interface Palette {
+  id: string;
+  label: string;
+  accent: string;
+}
+
+const {
+  palettes = [] as Palette[],
+  defaultPalette = "sol",
+  legend = "Colour theme",
+  showLegend = false,
+  class: className,
+  useDefaultEditableBinding: _useDefaultEditableBinding = false,
+  _component,
+  ...htmlAttributes
+} = Astro.props;
+
+if (!_component && palettes.length === 0) return;
+---
+
+<div
+  class:list={["palette-switcher", className]}
+  {...htmlAttributes}
+>
+  {showLegend && <span class="palette-switcher-legend">{legend}</span>}
+  <div
+    class="palette-switcher-options"
+    role="group"
+    aria-label={legend}
+  >
+    {
+      palettes.map((palette: Palette) => (
+        <button
+          type="button"
+          class="palette-dot"
+          data-palette-option={palette.id}
+          style={{ "--palette-dot-color": palette.accent }}
+          aria-pressed={palette.id === defaultPalette ? "true" : "false"}
+          aria-label={`${palette.label} colour theme`}
+          title={palette.label}
+        />
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  import { onPageLoad } from "@component-utils/onPageLoad";
+
+  const initPaletteSwitchers = () => {
+    const buttons = document.querySelectorAll<HTMLButtonElement>("[data-palette-option]");
+
+    if (!buttons.length) return;
+
+    const syncPressed = (active: string) => {
+      buttons.forEach((button) => {
+        const isActive = button.dataset.paletteOption === active;
+
+        button.setAttribute("aria-pressed", isActive ? "true" : "false");
+      });
+    };
+
+    const apply = (palette: string) => {
+      document.documentElement.setAttribute("data-palette", palette);
+
+      try {
+        localStorage.setItem("palette", palette);
+      } catch {
+        // Storage can be unavailable (private mode, blocked cookies). The
+        // palette still applies for this page view.
+      }
+
+      syncPressed(palette);
+    };
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const palette = button.dataset.paletteOption;
+
+        if (palette) apply(palette);
+      });
+    });
+
+    syncPressed(document.documentElement.getAttribute("data-palette") || "");
+  };
+
+  onPageLoad(initPaletteSwitchers);
+</script>
+
+<style is:global>
+  @layer components {
+    .palette-switcher {
+      align-items: center;
+      display: flex;
+      gap: var(--spacing-sm);
+
+      > .palette-switcher-legend {
+        color: var(--color-text-muted);
+        font-family: var(--font-mono);
+        font-size: var(--font-size-xs);
+      }
+
+      > .palette-switcher-options {
+        align-items: center;
+        display: flex;
+        gap: 2px;
+      }
+
+      .palette-dot {
+        appearance: none;
+        background-clip: content-box;
+        background-color: var(--palette-dot-color);
+        border: 0;
+        border-radius: var(--radius-full);
+        box-shadow: inset 0 0 0 1px var(--color-border);
+        box-sizing: border-box;
+        cursor: pointer;
+        height: 24px;
+        padding: 4px;
+        transition:
+          box-shadow 0.2s ease,
+          transform 0.2s ease;
+        width: 24px;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+
+        &:focus-visible {
+          outline: 2px solid var(--color-text-strong);
+          outline-offset: 3px;
+        }
+
+        &[aria-pressed="true"] {
+          box-shadow:
+            inset 0 0 0 2.5px var(--color-text-strong),
+            inset 0 0 0 4px var(--color-border);
+          transform: scale(1.12);
+        }
+      }
+    }
+  }
+</style>

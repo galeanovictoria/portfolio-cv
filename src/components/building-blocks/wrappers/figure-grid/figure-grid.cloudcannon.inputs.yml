@@ -1,0 +1,36 @@
+figures:
+  type: array
+  comment: The framed images to show, in order.
+  options:
+    structures: _structures.figureItems
+columns:
+  type: number
+  comment: Columns on wide screens. Collapses to one on narrow screens.
+  options:
+    min: 1
+    max: 4
+    step: 1
+ratio:
+  type: text
+  label: Aspect ratio
+  comment: A CSS aspect ratio such as "16 / 10", "4 / 3" or "1 / 1". Every frame in the row uses it.
+gap:
+  type: select
+  comment: Space between figures.
+  options:
+    values:
+      - id: sm
+        name: Small
+      - id: md
+        name: Medium
+      - id: lg
+        name: Large
+surface:
+  type: select
+  comment: Colour behind each image while it loads.
+  options:
+    values:
+      - id: paper
+        name: Paper
+      - id: ink
+        name: Ink

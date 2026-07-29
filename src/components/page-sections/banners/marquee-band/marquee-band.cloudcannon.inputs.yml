@@ -1,0 +1,19 @@
+items:
+  type: array
+  label: Words
+  comment: The words scrolled across the band, in order.
+  options:
+    structures: _structures.wordItems
+separator:
+  type: text
+  comment: Character shown between words.
+duration:
+  type: number
+  comment: Seconds for one full loop. Higher is slower. The animation stops entirely for visitors who prefer reduced motion.
+  options:
+    min: 10
+    max: 120
+    step: 5
+sectionLabel:
+  type: text
+  comment: Accessible name for the band, and the source of its HTML id.

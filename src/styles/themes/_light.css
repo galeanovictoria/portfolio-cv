@@ -1,0 +1,59 @@
+/* Light theme — the site's "paper" mode.
+   Values come from the active palette (see variables/_palettes.css) so the
+   whole component library restyles when the palette changes. */
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* Multiplier for single-colour line art that has to flip on dark surfaces.
+     Read as `filter: invert(var(--invert-on-dark))`, so it tracks whichever
+     themed ancestor is nearest — including after the visitor hits the toggle. */
+  --invert-on-dark: 0;
+
+  --color-brand: var(--palette-accent);
+  --color-brand-muted: color-mix(in srgb, var(--palette-accent) 82%, black);
+  --color-brand-subtle: color-mix(in srgb, var(--palette-accent) 55%, var(--palette-bg));
+  --color-brand-on: var(--palette-accent-ink);
+
+  --color-text: var(--palette-ink-soft);
+  --color-text-strong: var(--palette-ink);
+  --color-text-muted: var(--palette-muted);
+  --color-text-on-muted: var(--palette-ink);
+  --color-text-on-brand: var(--palette-accent-ink);
+  --color-text-inverse: var(--palette-band-ink);
+  --color-link: var(--palette-accent);
+  --color-link-hover: color-mix(in srgb, var(--palette-accent) 75%, black);
+
+  --color-bg: var(--palette-bg);
+  --color-bg-surface: var(--palette-paper);
+  --color-bg-muted: color-mix(in srgb, var(--palette-line) 60%, var(--palette-bg));
+  --color-bg-accent: color-mix(in srgb, var(--palette-accent) 12%, var(--palette-paper));
+  --color-bg-highlight: color-mix(in srgb, var(--palette-accent) 22%, var(--palette-paper));
+
+  /* Primary buttons and inverse fills are ink, not accent — accent is reserved
+     for emphasis so it keeps its punch. */
+  --color-bg-brand: var(--palette-ink);
+  --color-bg-brand-muted: var(--palette-accent);
+  --color-bg-inverse: var(--palette-band);
+
+  --color-border: var(--palette-line);
+  --color-border-inputs: color-mix(in srgb, var(--palette-ink) 45%, var(--palette-bg));
+  --color-border-strong: var(--palette-ink);
+  --color-border-subtle: color-mix(in srgb, var(--palette-line) 55%, var(--palette-bg));
+
+  --color-state-hover: rgba(0, 0, 0, 0.04);
+  --color-state-active: rgba(0, 0, 0, 0.08);
+  --color-overlay: rgba(0, 0, 0, 0.5);
+
+  --color-focus-ring: color-mix(in srgb, var(--palette-accent) 45%, transparent);
+
+  --color-danger: #dc2626;
+  --color-danger-hover: #b91c1c;
+  --color-danger-bg-subtle: #fef2f2;
+  --color-danger-border-subtle: #fca5a5;
+  --color-info: #2563eb;
+  --color-info-bg-subtle: #eff6ff;
+  --color-info-border-subtle: #bfdbfe;
+  --color-success: #16a34a;
+  --color-success-bg-subtle: #dcfce7;
+  --color-error: var(--color-danger);
+}

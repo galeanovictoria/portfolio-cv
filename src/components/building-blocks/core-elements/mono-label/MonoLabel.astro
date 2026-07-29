@@ -1,0 +1,123 @@
+---
+import MarkdownIt from "markdown-it";
+
+/**
+ * The site's monospaced label — eyebrows, meta lines, image captions, counters.
+ * Small, wide-tracked, and usually uppercase.
+ */
+const {
+  text,
+  tone = "accent",
+  size = "sm",
+  tracking = "label",
+  uppercase = true,
+  alignmentHorizontal = "start",
+  class: className,
+  useDefaultEditableBinding = false,
+  "data-prop": customDataProp,
+  _component,
+  ...htmlAttributes
+} = Astro.props;
+
+const md = MarkdownIt({ html: true });
+const markdownText = text ? md.renderInline(text).replace(/\n/g, "<br />") : "";
+
+const effectiveDataProp = customDataProp ?? (useDefaultEditableBinding ? "text" : null);
+const textDataAttributes = effectiveDataProp
+  ? { "data-editable": "text", "data-prop": effectiveDataProp }
+  : {};
+
+const hasText = text?.trim().length > 0;
+const hasSlotContent = Astro.slots.has("default");
+
+if (!_component && !hasText && !hasSlotContent) return;
+---
+
+<div
+  class:list={[
+    "mono-label",
+    `tone-${tone}`,
+    `size-${size}`,
+    `tracking-${tracking}`,
+    `align-${alignmentHorizontal}`,
+    uppercase && "uppercase",
+    className,
+  ]}
+  {...htmlAttributes}
+>
+  <span
+    class="mono-label-inner"
+    {...textDataAttributes}
+  >
+    <slot>
+      {text && <Fragment set:html={markdownText} />}
+    </slot>
+  </span>
+</div>
+
+<style is:global>
+  @layer components {
+    .mono-label {
+      font-family: var(--font-mono);
+      font-weight: var(--font-weight-bold);
+      line-height: 1.5;
+      margin-top: var(--spacing-md);
+
+      &.uppercase {
+        text-transform: uppercase;
+      }
+
+      &.tone-accent {
+        color: var(--color-brand);
+      }
+
+      &.tone-muted {
+        color: var(--color-text-muted);
+      }
+
+      &.tone-ink {
+        color: var(--color-text-strong);
+      }
+
+      &.tone-inherit {
+        color: inherit;
+      }
+
+      &.size-xs {
+        font-size: var(--font-size-xs);
+      }
+
+      &.size-sm {
+        font-size: var(--font-size-sm);
+      }
+
+      &.size-md {
+        font-size: var(--font-size-md);
+      }
+
+      &.tracking-none {
+        letter-spacing: 0;
+      }
+
+      &.tracking-label {
+        letter-spacing: var(--letter-spacing-label);
+      }
+
+      &.tracking-wide {
+        letter-spacing: var(--letter-spacing-label-wide);
+      }
+
+      &.align-start {
+        text-align: start;
+      }
+
+      &.align-center {
+        text-align: center;
+      }
+
+      &.align-end {
+        text-align: end;
+      }
+    }
+  }
+</style>

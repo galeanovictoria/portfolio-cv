@@ -1,0 +1,77 @@
+figureItems:
+  style: modal
+  values:
+    - label: Figure
+      icon: image
+      description: A framed image with a monospaced caption.
+      value:
+        imageSource: ""
+        imageAlt: ""
+        caption: ""
+        fit: cover
+        positionVertical: center
+        positionHorizontal: center
+      preview:
+        text:
+          - key: caption
+          - Figure
+        subtext:
+          - key: imageAlt
+          - Add an image
+        image:
+          - key: imageSource
+      picker_preview:
+        text: Figure
+        subtext: A framed image with a monospaced caption.
+        icon: image
+      _inputs:
+        imageSource:
+          type: image
+          label: Image
+          comment: The image to frame.
+          options:
+            paths:
+              uploads: src/assets/images
+              static: ""
+            resize_style: contain
+            width: 1600
+        imageAlt:
+          type: textarea
+          label: Alt text
+          comment: What the image shows. Leave empty only if it is purely decorative.
+        caption:
+          type: text
+          comment: Caption beneath the frame. Bold text is picked out in the ink colour.
+        fit:
+          type: select
+          comment: Cover crops the image to fill the frame. Contain fits the whole image inside it.
+          options:
+            values:
+              - id: cover
+                name: Cover
+              - id: contain
+                name: Contain
+        positionVertical:
+          type: select
+          label: Vertical focal point
+          comment: Which part of the image to keep when cropping.
+          options:
+            values:
+              - id: top
+                name: Top
+              - id: center
+                name: Center
+              - id: bottom
+                name: Bottom
+        positionHorizontal:
+          type: select
+          label: Horizontal focal point
+          comment: Which part of the image to keep when cropping.
+          options:
+            values:
+              - id: left
+                name: Left
+              - id: center
+                name: Center
+              - id: right
+                name: Right

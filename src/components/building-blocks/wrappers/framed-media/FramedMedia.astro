@@ -1,0 +1,150 @@
+---
+import Component from "@components/utils/renderBlock.astro";
+import Image from "@core-elements/image/Image.astro";
+
+/**
+ * The site's media frame: a hairline ink border, a soft radius, and an
+ * optional fixed aspect ratio that whatever sits inside is cropped to.
+ *
+ * Give it an image directly, or nest blocks (a browser frame, a video) via
+ * `mediaSections`.
+ */
+const {
+  imageSource = "",
+  imageAlt = "",
+  priority = false,
+  positionVertical = "center",
+  positionHorizontal = "center",
+  /** A CSS aspect-ratio value, e.g. "16 / 9". Leave empty to size to content. */
+  ratio = "16 / 9",
+  border = true,
+  rounded = true,
+  surface = "paper",
+  mediaSections,
+  class: className,
+  useDefaultEditableBinding = false,
+  "data-children-prop": childrenDataProp,
+  _component,
+  ...htmlAttributes
+} = Astro.props;
+
+const effectiveChildrenProp =
+  childrenDataProp ?? (useDefaultEditableBinding ? "mediaSections" : null);
+const arrayDataAttributes =
+  effectiveChildrenProp && mediaSections
+    ? { "data-editable": "array", "data-prop": effectiveChildrenProp }
+    : {};
+
+const hasImage = typeof imageSource === "string" && imageSource.trim() !== "";
+const hasMediaSections = Array.isArray(mediaSections) && mediaSections.length > 0;
+const hasSlotContent = Astro.slots.has("default");
+
+if (!_component && !hasImage && !hasMediaSections && !hasSlotContent) return;
+---
+
+<div
+  class:list={[
+    "framed-media",
+    border && "bordered",
+    rounded && "rounded",
+    ratio && "has-ratio",
+    `surface-${surface}`,
+    className,
+  ]}
+  style={ratio ? { "--frame-ratio": ratio } : undefined}
+  {...htmlAttributes}
+>
+  <div
+    class="framed-media-inner"
+    {...arrayDataAttributes}
+  >
+    <slot>
+      {
+        hasImage && (
+          <Image
+            source={imageSource}
+            alt={imageAlt}
+            priority={priority}
+            positionVertical={positionVertical}
+            positionHorizontal={positionHorizontal}
+            data-prop-src="imageSource"
+            data-prop-alt="imageAlt"
+          />
+        )
+      }
+      {
+        hasMediaSections && (
+          <Component
+            contentSections={mediaSections}
+            useDefaultEditableBinding={!!effectiveChildrenProp}
+          />
+        )
+      }
+    </slot>
+  </div>
+</div>
+
+<style is:global>
+  @layer components {
+    .framed-media {
+      margin-top: var(--spacing-lg);
+      overflow: hidden;
+      position: relative;
+
+      &.bordered {
+        border: 1.5px solid var(--color-border-strong);
+      }
+
+      &.rounded {
+        border-radius: var(--radius-lg);
+      }
+
+      &.surface-paper {
+        background-color: var(--color-bg-surface);
+      }
+
+      &.surface-ink {
+        background-color: var(--color-bg-inverse);
+      }
+
+      &.surface-none {
+        background-color: transparent;
+      }
+
+      > .framed-media-inner {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+
+        /* Nested blocks bring their own top margin; inside a frame they should
+           sit flush to the edges. */
+        > * {
+          margin-top: 0 !important;
+        }
+      }
+
+      &.has-ratio {
+        aspect-ratio: var(--frame-ratio);
+
+        > .framed-media-inner {
+          > .image,
+          > .image > .image-inner,
+          > .image picture {
+            height: 100%;
+          }
+
+          > .image img {
+            height: 100%;
+            object-fit: cover;
+            width: 100%;
+          }
+
+          > .browser-frame {
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
+</style>

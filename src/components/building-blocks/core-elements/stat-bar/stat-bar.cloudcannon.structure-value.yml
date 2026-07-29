@@ -1,0 +1,28 @@
+label: Stat Bar
+icon: leaderboard
+description: A row of outcome figures with monospaced captions.
+value:
+  _component: building-blocks/core-elements/stat-bar
+  stats:
+    - value: +21%
+      label: Monthly visits
+    - value: 25+
+      label: Editors publishing
+    - value: "5"
+      label: Teams self-serving
+  variant: boxed
+  columns: 3
+  size: md
+preview:
+  text:
+    - Stat Bar
+  subtext:
+    - key: stats[0].value
+    - Add figures
+  icon: leaderboard
+picker_preview:
+  text: Stat Bar
+  subtext: A row of outcome figures with monospaced captions.
+  icon: leaderboard
+_inputs_from_glob:
+  - /src/components/building-blocks/core-elements/stat-bar/stat-bar.cloudcannon.inputs.yml

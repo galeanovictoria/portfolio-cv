@@ -1,0 +1,143 @@
+label: CTA Panel
+icon: featured_play_list
+description: A bordered paper panel with a heading on the left and buttons on the right.
+value:
+  _component: page-sections/ctas/cta-panel
+  sectionLabel: ""
+  eyebrow: Eyebrow
+  heading: Panel heading
+  headingLevel: h2
+  subtext: A supporting line beneath the heading.
+  doodleSource: ""
+  buttonSections:
+    - _component: building-blocks/core-elements/button
+      text: Read more
+      hideText: false
+      link: ""
+      iconName: ""
+      iconColor: default
+      iconPosition: before
+      variant: primary
+      size: md
+  maxContentWidth: 2xl
+  paddingHorizontal: lg
+  paddingVertical: 3xl
+  colorScheme: inherit
+  backgroundColor: none
+preview:
+  text:
+    - key: heading
+    - CTA Panel
+  subtext:
+    - key: eyebrow
+    - Bordered call-to-action panel
+  icon: featured_play_list
+picker_preview:
+  text: CTA Panel
+  subtext: A bordered paper panel with a heading on the left and buttons on the right.
+  icon: featured_play_list
+_inputs_from_glob:
+  - /src/components/page-sections/ctas/cta-panel/cta-panel.cloudcannon.inputs.yml
+_inputs:
+  sectionLabel:
+    type: text
+    comment: Optional label to identify the section in the editor. When set and no HTML id is provided, an id is derived from this value.
+  maxContentWidth:
+    type: select
+    comment: Maximum width constraint for the content.
+    options:
+      values:
+        - id: none
+          name: None
+        - id: xs
+          name: Extra Small
+        - id: sm
+          name: Small
+        - id: md
+          name: Medium
+        - id: lg
+          name: Large
+        - id: xl
+          name: Extra Large
+        - id: 2xl
+          name: 2xl
+        - id: 3xl
+          name: 3xl
+  paddingHorizontal:
+    type: select
+    comment: Horizontal padding applied to the section content.
+    options:
+      values:
+        - id: none
+          name: None
+        - id: xs
+          name: Extra Small
+        - id: sm
+          name: Small
+        - id: md
+          name: Medium
+        - id: lg
+          name: Large
+        - id: xl
+          name: Extra Large
+        - id: 2xl
+          name: 2xl
+        - id: 3xl
+          name: 3xl
+  paddingVertical:
+    type: select
+    comment: Vertical padding applied to the section content.
+    options:
+      values:
+        - id: none
+          name: None
+        - id: xs
+          name: Extra Small
+        - id: sm
+          name: Small
+        - id: md
+          name: Medium
+        - id: lg
+          name: Large
+        - id: xl
+          name: Extra Large
+        - id: 2xl
+          name: 2xl
+        - id: 3xl
+          name: 3xl
+        - id: 4xl
+          name: 4xl
+        - id: 5xl
+          name: 5xl
+        - id: 6xl
+          name: 6xl
+  colorScheme:
+    type: select
+    comment: Color scheme theme for the section wrapper. Dark renders the section as the site's ink band.
+    options:
+      values:
+        - id: inherit
+          name: Inherit
+        - id: light
+          name: Light
+        - id: dark
+          name: Dark
+  lockColorScheme:
+    type: switch
+    comment: Keep the selected color scheme from flipping when the visitor toggles the site theme.
+    hidden: true
+  backgroundColor:
+    type: select
+    comment: Solid background color token behind the section content.
+    options:
+      values:
+        - id: none
+          name: None
+        - id: base
+          name: Base
+        - id: surface
+          name: Surface
+        - id: accent
+          name: Accent
+        - id: highlight
+          name: Highlight

@@ -1,0 +1,138 @@
+@layer base {
+  body {
+    font-family: var(--font-body);
+  }
+
+  :where(:root) {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: var(--color-text-strong);
+      font-family: var(--font-headings);
+      font-weight: var(--font-weight-extrabold);
+      letter-spacing: var(--letter-spacing-heading);
+      margin-bottom: 0.5em;
+      margin-top: 0.8em;
+    }
+
+    h1,
+    h2,
+    h3 {
+      text-wrap: balance;
+    }
+
+    h1 {
+      font-size: var(--font-size-heading-2xl);
+      letter-spacing: var(--letter-spacing-display);
+      line-height: 0.98;
+    }
+
+    h2 {
+      font-size: var(--font-size-heading-xl);
+      line-height: 1.04;
+    }
+
+    h3 {
+      font-size: var(--font-size-heading-lg);
+      line-height: 1.12;
+    }
+
+    h4,
+    h5,
+    h6 {
+      font-weight: var(--font-weight-bold);
+    }
+
+    h4 {
+      font-size: var(--font-size-heading-md);
+      line-height: 1.2;
+    }
+
+    h5 {
+      font-size: var(--font-size-heading-sm);
+      line-height: 1.3;
+    }
+
+    h6 {
+      font-size: var(--font-size-heading-xs);
+      line-height: 1.4;
+    }
+
+    p,
+    ul,
+    ol {
+      color: var(--color-text);
+      font-size: var(--font-size-md);
+      line-height: 1.6;
+    }
+
+    strong {
+      font-weight: var(--font-weight-bold);
+    }
+
+    a {
+      color: var(--color-link);
+
+      &:hover {
+        color: var(--color-link-hover);
+      }
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    a,
+    td,
+    th,
+    pre,
+    li {
+      overflow-wrap: break-word;
+    }
+
+    code {
+      overflow-wrap: anywhere;
+    }
+  }
+
+  /* Eyebrows are the site's mono label: uppercase, wide-tracked, accent. */
+  .eyebrow {
+    color: var(--color-brand);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    font-weight: 400;
+    letter-spacing: var(--letter-spacing-label-wide);
+    margin-bottom: var(--spacing-sm);
+    text-transform: uppercase;
+  }
+
+  .eyebrow + .heading,
+  .eyebrow + h1,
+  .eyebrow + h2,
+  .eyebrow + h3,
+  .eyebrow + h4,
+  .eyebrow + h5,
+  .eyebrow + h6 {
+    margin-top: 0;
+  }
+
+  /* Long-form copy is set in the serif — ledes, case-study prose, quotes. */
+  .subtext,
+  .prose {
+    color: var(--color-text);
+    font-family: var(--font-serif);
+
+    p,
+    ul,
+    ol {
+      font-family: var(--font-serif);
+      line-height: 1.55;
+    }
+  }
+}

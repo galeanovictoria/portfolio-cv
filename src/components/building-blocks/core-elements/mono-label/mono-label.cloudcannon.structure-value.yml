@@ -1,0 +1,24 @@
+label: Mono Label
+icon: label
+description: Small monospaced label for eyebrows, meta lines, and captions.
+value:
+  _component: building-blocks/core-elements/mono-label
+  text: Label text
+  tone: accent
+  size: sm
+  tracking: label
+  uppercase: true
+  alignmentHorizontal: start
+preview:
+  text:
+    - key: text
+    - Mono Label
+  subtext:
+    - Mono label
+  icon: label
+picker_preview:
+  text: Mono Label
+  subtext: Small monospaced label for eyebrows, meta lines, and captions.
+  icon: label
+_inputs_from_glob:
+  - /src/components/building-blocks/core-elements/mono-label/mono-label.cloudcannon.inputs.yml

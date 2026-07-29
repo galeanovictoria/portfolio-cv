@@ -1,0 +1,16 @@
+cards:
+  type: array
+  comment: The linked thumbnail cards, in order.
+  options:
+    structures: _structures.linkCardItems
+columns:
+  type: number
+  comment: Columns on wide screens. Steps down to two and then one on narrower screens.
+  options:
+    min: 1
+    max: 4
+    step: 1
+ratio:
+  type: text
+  label: Thumbnail aspect ratio
+  comment: A CSS aspect ratio such as "4 / 3" or "16 / 9".

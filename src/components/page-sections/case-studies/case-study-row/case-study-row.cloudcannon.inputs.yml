@@ -1,0 +1,72 @@
+number:
+  type: text
+  comment: The entry number, such as "01".
+heading:
+  type: text
+  comment: Project name.
+headingLevel:
+  type: select
+  comment: Heading level. Use h3 when the list sits under an h2 section header.
+  options:
+    values:
+      - id: h2
+        name: H2
+      - id: h3
+        name: H3
+meta:
+  type: text
+  comment: Monospaced credit line — client, role, and dates.
+description:
+  type: markdown
+  comment: What the project was and what you did.
+  options:
+    blockquote: false
+    bold: true
+    format:
+    italic: true
+    link: true
+    bulletedlist: false
+    numberedlist: false
+quoteText:
+  type: markdown
+  label: Quote
+  comment: Optional client quote. Leave empty to hide the quote entirely.
+  options:
+    blockquote: false
+    bold: false
+    format:
+    italic: true
+    link: false
+    bulletedlist: false
+    numberedlist: false
+quoteAttribution:
+  type: text
+  label: Quote attribution
+  comment: Who said it, and their role.
+tags:
+  type: array
+  comment: Scope pills describing the shape of the work.
+  options:
+    structures: _structures.tagItems
+stats:
+  type: array
+  comment: Outcome figures. Leave empty to hide the stat panel.
+  options:
+    structures: _structures.statItems
+buttonSections:
+  type: array
+  comment: Links to the case study and any external write-ups.
+  options:
+    structures: _structures.buttonSections
+mediaSections:
+  type: array
+  label: Media
+  comment: Blocks shown alongside the write-up — framed images, a browser frame, or a figure grid.
+  options:
+    structures: _structures.caseStudyMediaSections
+reverse:
+  type: switch
+  comment: Put the media on the left. Alternate this down the page so the numbers zig-zag.
+divider:
+  type: switch
+  comment: Draw a hairline rule beneath the row.

@@ -1,0 +1,27 @@
+metaItems:
+  style: modal
+  values:
+    - label: Fact
+      icon: info
+      description: A labelled project fact, such as Client or Timeline.
+      value:
+        label: ""
+        value: ""
+      preview:
+        text:
+          - key: label
+          - Fact
+        subtext:
+          - key: value
+          - Add a value
+      picker_preview:
+        text: Fact
+        subtext: A labelled project fact, such as Client or Timeline.
+        icon: info
+      _inputs:
+        label:
+          type: text
+          comment: What the fact is, such as "Client" or "My role". Shown small and uppercase.
+        value:
+          type: text
+          comment: The fact itself.

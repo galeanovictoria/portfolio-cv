@@ -1,0 +1,33 @@
+label: Figure Grid
+icon: photo_library
+description: A row of framed images with monospaced captions.
+value:
+  _component: building-blocks/wrappers/figure-grid
+  figures:
+    - imageSource: ""
+      imageAlt: ""
+      caption: ""
+      fit: cover
+    - imageSource: ""
+      imageAlt: ""
+      caption: ""
+      fit: cover
+  columns: 2
+  ratio: 16 / 10
+  gap: md
+  surface: paper
+preview:
+  text:
+    - Figure Grid
+  subtext:
+    - key: figures[0].caption
+    - Add figures
+  image:
+    - key: figures[0].imageSource
+  icon: photo_library
+picker_preview:
+  text: Figure Grid
+  subtext: A row of framed images with monospaced captions.
+  icon: photo_library
+_inputs_from_glob:
+  - /src/components/building-blocks/wrappers/figure-grid/figure-grid.cloudcannon.inputs.yml

@@ -1,0 +1,120 @@
+---
+import CustomSection from "@builders/custom-section/CustomSection.astro";
+
+/**
+ * Previous / next links at the foot of a case study. The "next" link is set
+ * large — it is the one visitors are most likely to want.
+ */
+const {
+  previousLabel = "",
+  previousLink = "",
+  nextLabel = "",
+  nextLink = "",
+  sectionLabel = "Case study navigation",
+  maxContentWidth = "xl",
+  paddingHorizontal = "lg",
+  paddingVertical = "xl",
+  colorScheme = "inherit",
+  backgroundColor,
+  class: className,
+  useDefaultEditableBinding = false,
+  _component,
+  ...htmlAttributes
+} = Astro.props;
+
+const hasPrevious = Boolean(previousLabel?.trim() && previousLink?.trim());
+const hasNext = Boolean(nextLabel?.trim() && nextLink?.trim());
+
+if (!_component && !hasPrevious && !hasNext) return;
+---
+
+<CustomSection
+  class:list={["page-pager", className]}
+  label={sectionLabel}
+  maxContentWidth={maxContentWidth}
+  paddingHorizontal={paddingHorizontal}
+  paddingVertical={paddingVertical}
+  colorScheme={colorScheme}
+  backgroundColor={backgroundColor}
+  useDefaultEditableBinding={useDefaultEditableBinding}
+  {...htmlAttributes}
+>
+  <nav
+    class="page-pager-inner"
+    aria-label={sectionLabel}
+  >
+    {
+      hasPrevious ? (
+        <a
+          class="page-pager-previous"
+          href={previousLink}
+        >
+          <span
+            data-editable="text"
+            data-prop="previousLabel"
+          >
+            {previousLabel}
+          </span>
+        </a>
+      ) : (
+        <span />
+      )
+    }
+    {
+      hasNext && (
+        <a
+          class="page-pager-next"
+          href={nextLink}
+        >
+          <span
+            data-editable="text"
+            data-prop="nextLabel"
+          >
+            {nextLabel}
+          </span>
+        </a>
+      )
+    }
+  </nav>
+</CustomSection>
+
+<style is:global>
+  @layer page-sections {
+    .page-pager {
+      > .outer-content > .content > .page-pager-inner {
+        align-items: center;
+        border-top: 1.5px solid var(--color-border-strong);
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-lg);
+        justify-content: space-between;
+        padding-top: var(--spacing-xl);
+
+        > .page-pager-previous {
+          color: var(--color-text-muted);
+          font-family: var(--font-mono);
+          font-size: var(--font-size-sm);
+          text-decoration: none;
+
+          &:hover {
+            color: var(--color-brand);
+          }
+        }
+
+        > .page-pager-next {
+          color: var(--color-text-strong);
+          font-family: var(--font-headings);
+          font-size: var(--font-size-2xl);
+          font-weight: var(--font-weight-bold);
+          letter-spacing: var(--letter-spacing-heading);
+          margin-left: auto;
+          text-decoration: none;
+
+          &:hover {
+            color: var(--color-brand);
+          }
+        }
+      }
+    }
+  }
+</style>

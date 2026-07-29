@@ -1,0 +1,26 @@
+---
+/**
+ * Turns any link pointing at `#print` into a print / save-as-PDF trigger.
+ *
+ * Done this way so a plain Button block becomes a print button with no new
+ * component and no inline HTML in the content — and so it degrades to a
+ * harmless anchor if scripting is unavailable.
+ */
+---
+
+<script is:inline>
+  (function () {
+    document.addEventListener("click", function (event) {
+      var target = event.target;
+
+      if (!target || typeof target.closest !== "function") return;
+
+      var trigger = target.closest('a[href="#print"], a[href$="/#print"]');
+
+      if (!trigger) return;
+
+      event.preventDefault();
+      window.print();
+    });
+  })();
+</script>
