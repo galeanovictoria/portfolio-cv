@@ -1,0 +1,18 @@
+# build output
+dist/
+.astro
+.astro-broken-bak/
+
+# dependencies
+node_modules/
+
+# environment
+.env
+.env.production
+
+# macOS
+.DS_Store
+
+# editors
+.vscode/*
+!.vscode/extensions.json

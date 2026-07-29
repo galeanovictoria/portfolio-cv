@@ -1,0 +1,16 @@
+{
+  "name": "victoria-roberts-portfolio",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@cloudcannon/editable-regions": "^0.0.12",
+    "astro": "^6.0.2"
+  }
+}

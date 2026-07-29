@@ -1,0 +1,15 @@
+{
+  "ssg": "astro",
+  "mode": "hosted",
+  "build": {
+    "install_command": "npm install",
+    "build_command": "npm run build",
+    "output_path": "dist",
+    "preserved_paths": "node_modules",
+    "preserveOutput": false,
+    "includeGit": false,
+    "environment_variables": [],
+    "manually_configure_urls": false,
+    "node_version": "22"
+  }
+}

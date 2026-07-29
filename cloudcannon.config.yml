@@ -1,40 +1,67 @@
+timezone: Pacific/Auckland
+
 paths:
-  uploads: public/uploads
   static: public
+  uploads: public/assets/uploads
+
+commit_templates:
+  - label: Default message
+    template_string: '[default_commit_message]'
+  - label: Custom message
+    template_string: '{message}'
+
 collections_config:
   pages:
-    path: ''
-    icon: wysiwyg
+    path: src/pages
+    glob:
+      - '**/*.astro'
+    url: '/[full_slug]/'
+    icon: laptop_mac
     disable_url: false
-    preview:
-      text:
-      subtext:
-      icon:
-      icon_color:
-      icon_background_color:
-      image:
-      metadata:
-      gallery:
-    disable_add: false
-    disable_add_folder: false
-    disable_file_actions: false
-timezone: Pacific/Auckland
-markdown:
-  engine: commonmark
-  options:
-    xhtml: false
-    breaks: false
-    linkify: false
-    typographer: false
-    spaced_lists: false
-    sentence_per_line: false
-    gfm: true
-    code_block_fences: '```'
-    escape_snippets_in_code_blocks: false
-    treat_indentation_as_code: false
+    disable_add_folder: true
+    _enabled_editors:
+      - visual
+    add_options:
+      - name: Add New Page
+        schema: source_page
+        icon: pages
+    schemas:
+      source_page:
+        name: Source Editable Page
+        path: '.cloudcannon/schemas/source-page.astro'
+        remove_extra_inputs: false
+        hide_extra_inputs: true
+    create:
+      path: '[relative_base_path]/{filename|slugify|lowercase}.astro'
+    new_preview_url: /
+
+collection_groups:
+  - heading: Pages
+    collections:
+      - pages
+
+_editables:
+  content:
+    blockquote: true
+    bold: true
+    format: p h2 h3 h4
+    italic: true
+    strike: true
+    subscript: true
+    superscript: true
+    underline: true
+    link: true
+    bulletedlist: true
+    indent: true
+    numberedlist: true
+    outdent: true
+    code: true
+    embed: false
+    horizontalrule: true
+    image: false
     table: false
-    strikethrough: false
-    subscript: false
-    superscript: false
-    heading_ids: false
-    attributes: false
+    undo: true
+    redo: true
+    removeformat: true
+    copyformatting: true
+    image_size_attributes: false
