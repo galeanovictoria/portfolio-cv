@@ -1,0 +1,36 @@
+{
+  "defaultPalette": "sol",
+  "legend": "Colour theme",
+  "palettes": [
+    {
+      "id": "sol",
+      "label": "Sol",
+      "accent": "#0b6e3c"
+    },
+    {
+      "id": "pampa",
+      "label": "Pampa",
+      "accent": "#c4562f"
+    },
+    {
+      "id": "tinta",
+      "label": "Tinta",
+      "accent": "#ec1c2b"
+    },
+    {
+      "id": "electrica",
+      "label": "Eléctrica",
+      "accent": "#4b2ee6"
+    },
+    {
+      "id": "marea",
+      "label": "Marea",
+      "accent": "#0a6b63"
+    },
+    {
+      "id": "coral",
+      "label": "Coral",
+      "accent": "#b82e52"
+    }
+  ]
+}

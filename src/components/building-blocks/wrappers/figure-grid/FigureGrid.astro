@@ -1,0 +1,193 @@
+---
+import Image from "@core-elements/image/Image.astro";
+import MarkdownIt from "markdown-it";
+
+/**
+ * A row of framed images with monospaced captions underneath — the paired
+ * detail shots used through the case studies and the asset-box panel.
+ */
+type Figure = {
+  imageSource?: string;
+  imageAlt?: string;
+  caption?: string;
+  positionVertical?: string;
+  positionHorizontal?: string;
+  fit?: "cover" | "contain";
+};
+
+const {
+  figures = [] as Figure[],
+  columns = 2,
+  ratio = "16 / 10",
+  gap = "md",
+  surface = "paper",
+  class: className,
+  useDefaultEditableBinding = false,
+  "data-children-prop": childrenDataProp,
+  _component,
+  ...htmlAttributes
+} = Astro.props;
+
+const md = MarkdownIt({ html: true });
+
+const visibleFigures = (Array.isArray(figures) ? figures : []).filter(
+  (figure) => figure?.imageSource?.trim() || figure?.caption?.trim()
+);
+
+const effectiveChildrenProp = childrenDataProp ?? (useDefaultEditableBinding ? "figures" : null);
+const arrayDataAttributes = effectiveChildrenProp
+  ? { "data-editable": "array", "data-prop": effectiveChildrenProp, "data-direction": "row" }
+  : {};
+
+if (!_component && visibleFigures.length === 0) return;
+
+// With no ratio the frames size to the images themselves rather than cropping
+// them to a shape — what you want when the artwork is the point.
+const hasRatio = typeof ratio === "string" && ratio.trim() !== "";
+---
+
+<div
+  class:list={[
+    "figure-grid",
+    hasRatio && "has-ratio",
+    `gap-${gap}`,
+    `surface-${surface}`,
+    className,
+  ]}
+  style={{ "--figure-columns": String(columns), "--figure-ratio": hasRatio ? ratio : "auto" }}
+  {...htmlAttributes}
+>
+  <div
+    class="figure-grid-items"
+    {...arrayDataAttributes}
+  >
+    {
+      visibleFigures.map((figure) => (
+        <figure
+          class:list={["figure", `fit-${figure.fit || "cover"}`]}
+          data-editable="array-item"
+        >
+          <div class="figure-frame">
+            <Image
+              source={figure.imageSource}
+              alt={figure.imageAlt || ""}
+              positionVertical={figure.positionVertical || "center"}
+              positionHorizontal={figure.positionHorizontal || "center"}
+              data-prop-src="imageSource"
+              data-prop-alt="imageAlt"
+            />
+          </div>
+          {figure.caption && (
+            <figcaption
+              class="figure-caption"
+              data-editable="text"
+              data-prop="caption"
+              set:html={md.renderInline(figure.caption)}
+            />
+          )}
+        </figure>
+      ))
+    }
+  </div>
+</div>
+
+<style is:global>
+  @layer components {
+    .figure-grid {
+      margin-top: var(--spacing-lg);
+
+      &.gap-sm {
+        --figure-gap: var(--spacing-sm);
+      }
+
+      &.gap-md {
+        --figure-gap: var(--spacing-md);
+      }
+
+      &.gap-lg {
+        --figure-gap: var(--spacing-lg);
+      }
+
+      > .figure-grid-items {
+        display: grid;
+        gap: var(--figure-gap, var(--spacing-md));
+        grid-template-columns: repeat(var(--figure-columns, 2), minmax(0, 1fr));
+
+        > .figure {
+          display: flex;
+          flex-direction: column;
+          margin: 0;
+          min-width: 0;
+
+          > .figure-frame {
+            border: 1.5px solid var(--color-border-strong);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+
+            > .image {
+              margin-top: 0 !important;
+            }
+          }
+
+          > .figure-caption {
+            color: var(--color-text-muted);
+            font-family: var(--font-mono);
+            font-size: var(--font-size-xs);
+            line-height: 1.5;
+            margin-top: var(--spacing-sm);
+
+            b,
+            strong {
+              color: var(--color-text-strong);
+              font-weight: 500;
+            }
+          }
+        }
+      }
+
+      /* Fixed-ratio frames crop their image to the shape; without a ratio the
+         image keeps its own proportions and the frame follows it. */
+      &.has-ratio > .figure-grid-items > .figure {
+        > .figure-frame {
+          aspect-ratio: var(--figure-ratio);
+
+          > .image {
+            height: 100%;
+
+            .image-inner,
+            picture {
+              height: 100%;
+            }
+
+            img {
+              height: 100%;
+              width: 100%;
+            }
+          }
+        }
+
+        &.fit-cover > .figure-frame > .image img {
+          object-fit: cover;
+        }
+
+        &.fit-contain > .figure-frame > .image img {
+          object-fit: contain;
+        }
+      }
+
+      &.surface-paper > .figure-grid-items > .figure > .figure-frame {
+        background-color: var(--color-bg-surface);
+      }
+
+      &.surface-ink > .figure-grid-items > .figure > .figure-frame {
+        background-color: var(--color-bg-inverse);
+      }
+
+      @container (max-width: 560px) {
+        > .figure-grid-items {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+    }
+  }
+</style>

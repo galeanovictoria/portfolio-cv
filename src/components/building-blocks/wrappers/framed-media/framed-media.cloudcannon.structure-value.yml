@@ -1,0 +1,28 @@
+label: Framed Media
+icon: crop_original
+description: An image or nested block inside the site's hairline media frame.
+value:
+  _component: building-blocks/wrappers/framed-media
+  imageSource: ""
+  imageAlt: ""
+  priority: false
+  ratio: 16 / 9
+  border: true
+  rounded: true
+  surface: paper
+  mediaSections: []
+preview:
+  text:
+    - Framed Media
+  subtext:
+    - key: imageAlt
+    - key: ratio
+  image:
+    - key: imageSource
+  icon: crop_original
+picker_preview:
+  text: Framed Media
+  subtext: An image or nested block inside the site's hairline media frame.
+  icon: crop_original
+_inputs_from_glob:
+  - /src/components/building-blocks/wrappers/framed-media/framed-media.cloudcannon.inputs.yml

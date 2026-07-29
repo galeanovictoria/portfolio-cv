@@ -1,0 +1,20 @@
+tagItems:
+  style: modal
+  values:
+    - label: Tag
+      icon: label
+      description: A single pill of text.
+      value:
+        text: ""
+      preview:
+        text:
+          - key: text
+          - Tag
+      picker_preview:
+        text: Tag
+        subtext: A single pill of text.
+        icon: label
+      _inputs:
+        text:
+          type: text
+          comment: The pill text. Keep it short — these sit on one line.

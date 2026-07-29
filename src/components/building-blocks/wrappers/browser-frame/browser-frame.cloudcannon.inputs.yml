@@ -1,0 +1,53 @@
+url:
+  type: text
+  label: Address bar
+  comment: The URL shown in the fake address bar.
+lightImageSource:
+  type: image
+  label: Light screenshot
+  comment: Screenshot shown in light mode.
+  options:
+    paths:
+      uploads: src/assets/images
+      static: ""
+    resize_style: contain
+    width: 1920
+lightImageAlt:
+  type: textarea
+  label: Light screenshot alt text
+  comment: What the light screenshot shows.
+darkImageSource:
+  type: image
+  label: Dark screenshot
+  comment: Screenshot shown in dark mode. Leave empty to hide the Light/Dark control.
+  options:
+    paths:
+      uploads: src/assets/images
+      static: ""
+    resize_style: contain
+    width: 1920
+darkImageAlt:
+  type: textarea
+  label: Dark screenshot alt text
+  comment: What the dark screenshot shows.
+defaultMode:
+  type: select
+  comment: Which screenshot is shown first.
+  options:
+    values:
+      - id: light
+        name: Light
+      - id: dark
+        name: Dark
+scrollable:
+  type: switch
+  comment: Let visitors scroll a tall screenshot inside the frame.
+surface:
+  type: select
+  comment: Colour behind the screenshot while it loads.
+  options:
+    values:
+      - id: ink
+        name: Ink
+      - id: paper
+        name: Paper

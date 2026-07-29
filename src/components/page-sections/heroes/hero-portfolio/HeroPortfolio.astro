@@ -1,0 +1,511 @@
+---
+import CustomSection from "@builders/custom-section/CustomSection.astro";
+import MonoLabel from "@core-elements/mono-label/MonoLabel.astro";
+import Text from "@core-elements/text/Text.astro";
+import ButtonGroup from "@wrappers/button-group/ButtonGroup.astro";
+
+/**
+ * The portfolio hero: an oversized display headline whose final word rotates
+ * through a list, a serif lede on a frosted panel, and a hand-drawn pattern
+ * that a rainbow spotlight reveals as the pointer moves across it.
+ */
+const {
+  eyebrow = "",
+  headingLead = "",
+  rotatingWords = [] as { text?: string }[],
+  headingTrail = "",
+  subtext = "",
+  buttonSections = [],
+  patternSource = "",
+  rotateInterval = 2200,
+  sectionLabel,
+  maxContentWidth = "2xl",
+  paddingHorizontal = "lg",
+  paddingVertical = "5xl",
+  colorScheme = "inherit",
+  backgroundColor = "base",
+  class: className,
+  useDefaultEditableBinding = false,
+  _component,
+  ...htmlAttributes
+} = Astro.props;
+
+const words = (Array.isArray(rotatingWords) ? rotatingWords : [])
+  .map((word) => (typeof word === "string" ? word : word?.text))
+  .filter((word): word is string => Boolean(word?.trim()));
+
+const firstWord = words[0] ?? "";
+const hasPattern = typeof patternSource === "string" && patternSource.trim() !== "";
+---
+
+<CustomSection
+  class:list={["hero-portfolio", className]}
+  label={sectionLabel}
+  maxContentWidth={maxContentWidth}
+  paddingHorizontal={paddingHorizontal}
+  paddingVertical={paddingVertical}
+  colorScheme={colorScheme}
+  backgroundColor={backgroundColor}
+  useDefaultEditableBinding={useDefaultEditableBinding}
+  {...htmlAttributes}
+>
+  {
+    hasPattern && (
+      <canvas
+        class="hero-portfolio-canvas"
+        data-hero-canvas
+        data-pattern={patternSource}
+        aria-hidden="true"
+      />
+    )
+  }
+
+  <div class="hero-portfolio-content">
+    <MonoLabel
+      class="hero-portfolio-eyebrow"
+      text={eyebrow}
+      tone="accent"
+      size="sm"
+      tracking="wide"
+      data-prop="eyebrow"
+    />
+
+    <h1 class="hero-portfolio-heading">
+      <span
+        data-editable="text"
+        data-prop="headingLead"
+        >{headingLead}</span
+      >
+      {
+        firstWord && (
+          <>
+            {" "}
+            <span
+              class="hero-portfolio-rotating"
+              data-hero-rotating
+              data-words={JSON.stringify(words)}
+              data-interval={String(rotateInterval)}
+            >
+              {firstWord}
+            </span>
+          </>
+        )
+      }
+      {
+        headingTrail && (
+          <>
+            {" "}
+            <span
+              data-editable="text"
+              data-prop="headingTrail"
+            >
+              {headingTrail}
+            </span>
+          </>
+        )
+      }
+    </h1>
+
+    <div class="hero-portfolio-foot">
+      <Text
+        class="hero-portfolio-lede"
+        text={subtext}
+        data-prop="subtext"
+      />
+      <ButtonGroup
+        class="hero-portfolio-buttons inline-buttons"
+        buttonSections={buttonSections}
+        data-children-prop="buttonSections"
+      />
+    </div>
+  </div>
+</CustomSection>
+
+<script>
+  import { onPageLoad } from "@component-utils/onPageLoad";
+
+  const prefersReducedMotion = () =>
+    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+
+  /** Cycles the final word of the headline. */
+  const initRotatingWords = () => {
+    document.querySelectorAll<HTMLElement>("[data-hero-rotating]").forEach((element) => {
+      let words: string[] = [];
+
+      try {
+        words = JSON.parse(element.dataset.words || "[]");
+      } catch {
+        words = [];
+      }
+
+      if (words.length < 2 || prefersReducedMotion()) return;
+
+      const interval = Number(element.dataset.interval) || 2200;
+      let index = 0;
+
+      const timer = window.setInterval(() => {
+        index = (index + 1) % words.length;
+        element.textContent = words[index];
+      }, interval);
+
+      document.addEventListener("astro:before-swap", () => window.clearInterval(timer), {
+        once: true,
+      });
+    });
+  };
+
+  /**
+   * Tiles the hand-drawn pattern across the hero at low opacity, then paints a
+   * rainbow-gradient copy of it through a radial mask that eases toward the
+   * pointer. With no pointer (or on touch) the spotlight drifts on its own.
+   */
+  const initHeroCanvas = () => {
+    document.querySelectorAll<HTMLCanvasElement>("canvas[data-hero-canvas]").forEach((canvas) => {
+      const context = canvas.getContext("2d");
+      const patternSource = canvas.dataset.pattern;
+
+      if (!context || !patternSource) return;
+
+      const pattern = new Image();
+      let tiled: HTMLCanvasElement | null = null;
+      let masked: HTMLCanvasElement | null = null;
+      let width = 0;
+      let height = 0;
+      let dpr = 1;
+      let frame = 0;
+      let resizeTimer = 0;
+      const pointer = { x: 0, y: 0 };
+      const target = { x: 0, y: 0 };
+      let hasPointer = false;
+
+      const buildTiles = () => {
+        if (!pattern.complete || !pattern.naturalWidth || !width || !height) return null;
+
+        const tile = document.createElement("canvas");
+
+        tile.width = Math.floor(width * dpr);
+        tile.height = Math.floor(height * dpr);
+
+        const tileContext = tile.getContext("2d");
+
+        if (!tileContext) return null;
+
+        tileContext.scale(dpr, dpr);
+
+        const tileWidth = 660;
+        const tileHeight = Math.round((tileWidth * pattern.naturalHeight) / pattern.naturalWidth);
+        const source = document.createElement("canvas");
+
+        source.width = tileWidth;
+        source.height = tileHeight;
+        source.getContext("2d")?.drawImage(pattern, 0, 0, tileWidth, tileHeight);
+
+        const fill = tileContext.createPattern(source, "repeat");
+
+        if (!fill) return null;
+
+        tileContext.fillStyle = fill;
+        tileContext.fillRect(0, 0, width, height);
+
+        return tile;
+      };
+
+      const resize = () => {
+        const rect = canvas.getBoundingClientRect();
+
+        if (!rect.width || !rect.height) return;
+
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        width = rect.width;
+        height = rect.height;
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        tiled = buildTiles();
+        masked = null;
+
+        if (!hasPointer) {
+          target.x = width * 0.72;
+          target.y = height * 0.48;
+          pointer.x = target.x;
+          pointer.y = target.y;
+        }
+      };
+
+      const render = (time: number) => {
+        frame = requestAnimationFrame(render);
+
+        const box = canvas.getBoundingClientRect();
+
+        // Skip work while the hero is off screen.
+        if (box.bottom < -50 || box.top > window.innerHeight + 50) return;
+
+        // Self-heal if the canvas has been laid out at a different size than
+        // the bitmap we last built. Without this the browser scales a stale
+        // bitmap up — the pattern stretches, and pointer coordinates no
+        // longer line up with what is drawn.
+        if (Math.abs(box.width - width) > 1 || Math.abs(box.height - height) > 1) {
+          resize();
+        }
+
+        if (!tiled) return;
+
+        if (!hasPointer) {
+          const drift = time * 0.00035;
+
+          target.x = width * (0.5 + 0.27 * Math.cos(drift));
+          target.y = height * (0.5 + 0.3 * Math.sin(drift * 1.3));
+        }
+
+        pointer.x += (target.x - pointer.x) * 0.08;
+        pointer.y += (target.y - pointer.y) * 0.08;
+
+        context.setTransform(dpr, 0, 0, dpr, 0, 0);
+        context.clearRect(0, 0, width, height);
+        context.globalAlpha = 0.05;
+        context.drawImage(tiled, 0, 0, width, height);
+        context.globalAlpha = 1;
+
+        if (!masked) {
+          masked = document.createElement("canvas");
+          masked.width = canvas.width;
+          masked.height = canvas.height;
+        }
+
+        const maskContext = masked.getContext("2d");
+
+        if (!maskContext) return;
+
+        const radius = Math.min(width, height) * 0.42;
+
+        maskContext.setTransform(dpr, 0, 0, dpr, 0, 0);
+        maskContext.globalCompositeOperation = "source-over";
+        maskContext.clearRect(0, 0, width, height);
+        maskContext.drawImage(tiled, 0, 0, width, height);
+
+        maskContext.globalCompositeOperation = "source-in";
+
+        const spectrum = maskContext.createLinearGradient(
+          pointer.x - radius,
+          pointer.y - radius,
+          pointer.x + radius,
+          pointer.y + radius
+        );
+
+        spectrum.addColorStop(0, "#2f9e5e");
+        spectrum.addColorStop(0.34, "#2fa79c");
+        spectrum.addColorStop(0.6, "#4b6ee6");
+        spectrum.addColorStop(0.82, "#e2557a");
+        spectrum.addColorStop(1, "#e6a52e");
+        maskContext.fillStyle = spectrum;
+        maskContext.fillRect(0, 0, width, height);
+
+        maskContext.globalCompositeOperation = "destination-in";
+
+        const spotlight = maskContext.createRadialGradient(
+          pointer.x,
+          pointer.y,
+          0,
+          pointer.x,
+          pointer.y,
+          radius
+        );
+
+        spotlight.addColorStop(0, "rgba(0,0,0,1)");
+        spotlight.addColorStop(0.55, "rgba(0,0,0,0.55)");
+        spotlight.addColorStop(1, "rgba(0,0,0,0)");
+        maskContext.fillStyle = spotlight;
+        maskContext.fillRect(0, 0, width, height);
+        maskContext.globalCompositeOperation = "source-over";
+
+        context.globalAlpha = 0.4;
+        context.drawImage(masked, 0, 0, width, height);
+        context.globalAlpha = 1;
+      };
+
+      const onPointerMove = (event: PointerEvent) => {
+        const rect = canvas.getBoundingClientRect();
+
+        target.x = event.clientX - rect.left;
+        target.y = event.clientY - rect.top;
+        hasPointer = true;
+      };
+
+      const observer = new ResizeObserver(() => {
+        window.clearTimeout(resizeTimer);
+        resizeTimer = window.setTimeout(resize, 160);
+      });
+
+      pattern.addEventListener("load", resize);
+      pattern.src = patternSource;
+
+      resize();
+
+      // Observe the canvas itself. Its parent is the max-width content column,
+      // which stops growing past that width — watching it would leave the
+      // canvas unresized (and stretched) on wider viewports.
+      observer.observe(canvas);
+      window.addEventListener("resize", resize);
+      window.addEventListener("pointermove", onPointerMove, { passive: true });
+
+      if (!prefersReducedMotion()) {
+        frame = requestAnimationFrame(render);
+      }
+
+      document.addEventListener(
+        "astro:before-swap",
+        () => {
+          cancelAnimationFrame(frame);
+          window.clearTimeout(resizeTimer);
+          observer.disconnect();
+          window.removeEventListener("resize", resize);
+          window.removeEventListener("pointermove", onPointerMove);
+        },
+        { once: true }
+      );
+    });
+  };
+
+  onPageLoad(() => {
+    initRotatingWords();
+    initHeroCanvas();
+  });
+</script>
+
+<style is:global>
+  @layer page-sections {
+    .hero-portfolio {
+      overflow: hidden;
+
+      /* Taken out of the positioning flow so the canvas below can bleed to the
+         full section width rather than stopping at the content column. */
+      > .outer-content > .content {
+        position: static;
+        z-index: auto;
+
+        > .hero-portfolio-canvas {
+          height: 100%;
+          inset: 0;
+          /* Fade the pattern out toward the foot of the hero so it hands over to
+             the next section instead of stopping on a hard edge. */
+          mask-image: linear-gradient(
+            to bottom,
+            #000 0%,
+            #000 62%,
+            rgba(0, 0, 0, 0.45) 84%,
+            transparent 100%
+          );
+          pointer-events: none;
+          position: absolute;
+          width: 100%;
+          z-index: 0;
+        }
+
+        > .hero-portfolio-content {
+          position: relative;
+          z-index: var(--layer-1);
+
+          > .hero-portfolio-eyebrow {
+            margin-top: 0;
+          }
+
+          > .hero-portfolio-heading {
+            font-size: var(--font-size-heading-3xl);
+            letter-spacing: var(--letter-spacing-display);
+            line-height: 0.94;
+            margin: var(--spacing-md) 0 0;
+
+            > .hero-portfolio-rotating {
+              color: var(--color-brand);
+              font-family: var(--font-serif);
+              font-style: italic;
+              font-weight: 500;
+            }
+          }
+
+          > .hero-portfolio-foot {
+            align-items: flex-end;
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-xl);
+            justify-content: space-between;
+            margin-top: var(--spacing-xl);
+
+            /* The lede is prose, so it takes the serif rather than the UI sans. */
+            > .hero-portfolio-lede {
+              backdrop-filter: blur(2px);
+              background: color-mix(in srgb, var(--color-bg) 82%, transparent);
+              border-radius: var(--radius-md);
+              flex: 1 1 24rem;
+              font-family: var(--font-serif);
+              font-weight: var(--font-weight-semibold);
+              margin-left: calc(var(--spacing-md) * -1);
+              margin-top: 0;
+              max-width: 38rem;
+              min-width: 0;
+              padding: var(--spacing-md);
+
+              p {
+                font-family: inherit;
+                font-size: var(--font-size-xl);
+                font-weight: inherit;
+                line-height: 1.5;
+              }
+            }
+
+            /* The two calls to action stay on one line beside the lede; they
+               only stack once the row itself has wrapped. */
+            > .hero-portfolio-buttons > .button-group__items {
+              flex-wrap: nowrap;
+            }
+
+            /* The secondary action sits over the pattern, so it carries a fill
+               of its own to stay legible against it. */
+            > .hero-portfolio-buttons .button-inner.variant-tertiary {
+              background-color: color-mix(in srgb, var(--color-bg-surface) 70%, transparent);
+
+              &:hover,
+              &:focus-visible {
+                background-color: var(--color-bg-inverse);
+                color: var(--color-text-inverse);
+              }
+            }
+          }
+        }
+      }
+
+      @media (width < 900px) {
+        > .outer-content > .content > .hero-portfolio-content {
+          /* The rotating word takes its own line on narrow screens so a longer
+             option like "depend on" never breaks mid-phrase. */
+          > .hero-portfolio-heading > .hero-portfolio-rotating {
+            display: block;
+            white-space: nowrap;
+          }
+
+          > .hero-portfolio-foot {
+            gap: var(--spacing-lg);
+
+            > .hero-portfolio-lede {
+              flex-basis: 100%;
+            }
+
+            > .hero-portfolio-buttons {
+              flex-basis: 100%;
+            }
+          }
+        }
+      }
+
+      @media (width < 460px) {
+        > .outer-content
+          > .content
+          > .hero-portfolio-content
+          > .hero-portfolio-foot
+          > .hero-portfolio-buttons
+          > .button-group__items {
+          flex-wrap: wrap;
+        }
+      }
+    }
+  }
+</style>

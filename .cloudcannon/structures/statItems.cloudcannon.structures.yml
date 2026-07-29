@@ -1,0 +1,27 @@
+statItems:
+  style: modal
+  values:
+    - label: Figure
+      icon: leaderboard
+      description: A number with a short caption.
+      value:
+        value: ""
+        label: ""
+      preview:
+        text:
+          - key: value
+          - Figure
+        subtext:
+          - key: label
+          - Add a caption
+      picker_preview:
+        text: Figure
+        subtext: A number with a short caption.
+        icon: leaderboard
+      _inputs:
+        value:
+          type: text
+          comment: The figure itself, such as "+21%", "25+" or "<3wk".
+        label:
+          type: text
+          comment: What the figure measures. Shown small and uppercase.

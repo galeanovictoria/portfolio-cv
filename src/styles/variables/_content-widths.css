@@ -1,0 +1,12 @@
+:where(:root) {
+  --content-width-xs: 350px;
+  --content-width-sm: 480px;
+  --content-width-md: 640px;
+  --content-width-lg: 768px;
+  --content-width-xl: 1024px;
+
+  /* 2xl is the site's main column. The header deliberately runs wider than it
+     (see MainNav) so the wordmark sits closer to the edge of the viewport. */
+  --content-width-2xl: 1220px;
+  --content-width-3xl: 1440px;
+}

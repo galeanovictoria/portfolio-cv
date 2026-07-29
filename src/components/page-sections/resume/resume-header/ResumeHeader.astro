@@ -1,0 +1,174 @@
+---
+import CustomSection from "@builders/custom-section/CustomSection.astro";
+import Heading from "@core-elements/heading/Heading.astro";
+import MonoLabel from "@core-elements/mono-label/MonoLabel.astro";
+import Text from "@core-elements/text/Text.astro";
+
+/**
+ * CV masthead: name and role on the left, contact details on the right, over a
+ * heavy rule — then the summary paragraphs beneath.
+ */
+const {
+  /** Route back to the site, at the top of the content. Hidden when printing. */
+  backLabel = "",
+  backLink = "",
+  name = "",
+  role = "",
+  contact = "",
+  summary = "",
+  sectionLabel,
+  maxContentWidth = "lg",
+  paddingHorizontal = "lg",
+  paddingVertical = "3xl",
+  colorScheme = "inherit",
+  backgroundColor,
+  class: className,
+  useDefaultEditableBinding = false,
+  _component,
+  ...htmlAttributes
+} = Astro.props;
+
+const hasBackLink = Boolean(backLabel?.trim() && backLink?.trim());
+---
+
+<CustomSection
+  class:list={["resume-header", className]}
+  label={sectionLabel}
+  maxContentWidth={maxContentWidth}
+  paddingHorizontal={paddingHorizontal}
+  paddingVertical={paddingVertical}
+  colorScheme={colorScheme}
+  backgroundColor={backgroundColor}
+  useDefaultEditableBinding={useDefaultEditableBinding}
+  {...htmlAttributes}
+>
+  {
+    hasBackLink && (
+      <a
+        class="resume-header-back"
+        href={backLink}
+      >
+        <span
+          data-editable="text"
+          data-prop="backLabel"
+        >
+          {backLabel}
+        </span>
+      </a>
+    )
+  }
+  <div class="resume-header-top">
+    <div class="resume-header-identity">
+      <Heading
+        class="resume-header-name"
+        level="h1"
+        size="2xl"
+        data-prop="name"
+      >
+        {name}
+      </Heading>
+      <MonoLabel
+        class="resume-header-role"
+        text={role}
+        tone="accent"
+        size="sm"
+        tracking="none"
+        data-prop="role"
+      />
+    </div>
+    <Text
+      class="resume-header-contact"
+      text={contact}
+      data-prop="contact"
+    />
+  </div>
+  <Text
+    class="resume-header-summary prose"
+    text={summary}
+    data-prop="summary"
+  />
+</CustomSection>
+
+<style is:global>
+  @layer page-sections {
+    .resume-header {
+      > .outer-content > .content {
+        container-type: inline-size;
+
+        > .resume-header-back {
+          align-items: center;
+          border: 1.5px solid var(--color-border-strong);
+          border-radius: var(--radius-full);
+          color: var(--color-text-strong);
+          display: inline-flex;
+          font-family: var(--font-mono);
+          font-size: var(--font-size-sm);
+          gap: var(--spacing-sm);
+          letter-spacing: 0.04em;
+          line-height: 1;
+          margin-bottom: var(--spacing-xl);
+          padding: 0.7em 1.1em;
+          text-decoration: none;
+          transition:
+            background-color 0.2s ease,
+            color 0.2s ease;
+
+          &:hover,
+          &:focus-visible {
+            background-color: var(--color-bg-inverse);
+            color: var(--color-text-inverse);
+          }
+        }
+
+        > .resume-header-top {
+          align-items: flex-end;
+          border-bottom: 2px solid var(--color-border-strong);
+          display: flex;
+          flex-wrap: wrap;
+          gap: var(--spacing-lg);
+          justify-content: space-between;
+          padding-bottom: var(--spacing-lg);
+
+          > .resume-header-identity {
+            min-width: 0;
+
+            > .resume-header-name {
+              margin-block: 0;
+            }
+
+            > .resume-header-role {
+              letter-spacing: 0.04em;
+              margin-top: var(--spacing-sm);
+            }
+          }
+
+          > .resume-header-contact {
+            margin-top: 0;
+            text-align: right;
+
+            p {
+              color: var(--color-text-muted);
+              font-family: var(--font-mono);
+              font-size: var(--font-size-xs);
+              line-height: 1.7;
+            }
+
+            a {
+              color: var(--color-brand);
+            }
+          }
+        }
+
+        > .resume-header-summary p {
+          font-size: var(--font-size-lg);
+        }
+
+        @container (max-width: 620px) {
+          > .resume-header-top > .resume-header-contact {
+            text-align: left;
+          }
+        }
+      }
+    }
+  }
+</style>

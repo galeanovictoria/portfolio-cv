@@ -1,0 +1,121 @@
+---
+import CustomSection from "@builders/custom-section/CustomSection.astro";
+import Component from "@components/utils/renderBlock.astro";
+import MonoLabel from "@core-elements/mono-label/MonoLabel.astro";
+
+/**
+ * The case-study body layout: a short monospaced label in a narrow left column
+ * and whatever you nest in the wide column beside it — prose, quotes, stat
+ * bars, figure grids.
+ *
+ * The label is a heading so the page keeps a real outline ("The problem",
+ * "What I did", "The outcome") rather than three unlabelled slabs of text.
+ */
+const {
+  label = "",
+  labelLevel = "h2",
+  contentSections = [],
+  sectionLabel,
+  maxContentWidth = "xl",
+  paddingHorizontal = "lg",
+  paddingVertical = "2xl",
+  colorScheme = "inherit",
+  backgroundColor,
+  class: className,
+  useDefaultEditableBinding = false,
+  _component,
+  ...htmlAttributes
+} = Astro.props;
+
+const LabelTag = labelLevel as "h2" | "h3";
+const hasContent = Array.isArray(contentSections) && contentSections.length > 0;
+---
+
+<CustomSection
+  class:list={["labelled-block", className]}
+  label={sectionLabel}
+  maxContentWidth={maxContentWidth}
+  paddingHorizontal={paddingHorizontal}
+  paddingVertical={paddingVertical}
+  colorScheme={colorScheme}
+  backgroundColor={backgroundColor}
+  useDefaultEditableBinding={useDefaultEditableBinding}
+  {...htmlAttributes}
+>
+  <div
+    class="labelled-block-inner"
+    data-reveal
+  >
+    {
+      label && (
+        <LabelTag class="labelled-block-label">
+          <MonoLabel
+            text={label}
+            tone="accent"
+            size="sm"
+            tracking="label"
+            data-prop="label"
+          />
+        </LabelTag>
+      )
+    }
+    <div
+      class="labelled-block-body"
+      data-editable="array"
+      data-prop="contentSections"
+    >
+      {
+        hasContent && (
+          <Component
+            contentSections={contentSections}
+            useDefaultEditableBinding={true}
+          />
+        )
+      }
+    </div>
+  </div>
+</CustomSection>
+
+<style is:global>
+  @layer page-sections {
+    .labelled-block {
+      > .outer-content > .content > .labelled-block-inner {
+        align-items: start;
+        container-type: inline-size;
+        display: grid;
+        gap: var(--spacing-2xl);
+        grid-template-columns: 12rem minmax(0, 1fr);
+
+        > .labelled-block-label {
+          font-size: inherit;
+          margin: 0;
+
+          > .mono-label {
+            margin-top: 0.35em;
+          }
+        }
+
+        > .labelled-block-body {
+          min-width: 0;
+
+          > *:first-child {
+            margin-top: 0 !important;
+          }
+
+          .prose p,
+          > .text p {
+            font-size: var(--font-size-lg);
+            line-height: 1.6;
+          }
+        }
+      }
+
+      @container (max-width: 700px) {
+        > .outer-content > .content > .labelled-block-inner {
+          gap: var(--spacing-md);
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+    }
+  }
+</style>

@@ -1,0 +1,139 @@
+label: About Profile
+icon: person
+description: Portrait and skill pills beside a long biography and career figures.
+value:
+  _component: page-sections/people/about-profile
+  sectionLabel: About
+  eyebrow: About
+  heading: A line that sums you up.
+  headingLevel: h2
+  body: Your biography. Several paragraphs is normal here.
+  aside: ""
+  imageSource: ""
+  imageAlt: ""
+  imageRatio: 4 / 5
+  skills: []
+  stats: []
+  doodleSource: ""
+  maxContentWidth: 2xl
+  paddingHorizontal: lg
+  paddingVertical: 4xl
+  colorScheme: dark
+  backgroundColor: base
+preview:
+  text:
+    - About Profile
+  subtext:
+    - key: heading
+  image:
+    - key: imageSource
+  icon: person
+picker_preview:
+  text: About Profile
+  subtext: Portrait and skill pills beside a long biography and career figures.
+  icon: person
+_inputs_from_glob:
+  - /src/components/page-sections/people/about-profile/about-profile.cloudcannon.inputs.yml
+_inputs:
+  sectionLabel:
+    type: text
+    comment: Optional label to identify the section in the editor. When set and no HTML id is provided, an id is derived from this value.
+  maxContentWidth:
+    type: select
+    comment: Maximum width constraint for the content.
+    options:
+      values:
+        - id: none
+          name: None
+        - id: xs
+          name: Extra Small
+        - id: sm
+          name: Small
+        - id: md
+          name: Medium
+        - id: lg
+          name: Large
+        - id: xl
+          name: Extra Large
+        - id: 2xl
+          name: 2xl
+        - id: 3xl
+          name: 3xl
+  paddingHorizontal:
+    type: select
+    comment: Horizontal padding applied to the section content.
+    options:
+      values:
+        - id: none
+          name: None
+        - id: xs
+          name: Extra Small
+        - id: sm
+          name: Small
+        - id: md
+          name: Medium
+        - id: lg
+          name: Large
+        - id: xl
+          name: Extra Large
+        - id: 2xl
+          name: 2xl
+        - id: 3xl
+          name: 3xl
+  paddingVertical:
+    type: select
+    comment: Vertical padding applied to the section content.
+    options:
+      values:
+        - id: none
+          name: None
+        - id: xs
+          name: Extra Small
+        - id: sm
+          name: Small
+        - id: md
+          name: Medium
+        - id: lg
+          name: Large
+        - id: xl
+          name: Extra Large
+        - id: 2xl
+          name: 2xl
+        - id: 3xl
+          name: 3xl
+        - id: 4xl
+          name: 4xl
+        - id: 5xl
+          name: 5xl
+        - id: 6xl
+          name: 6xl
+  colorScheme:
+    type: select
+    comment: Color scheme theme for the section wrapper. Dark renders the section as the site's ink band.
+    options:
+      values:
+        - id: inherit
+          name: Inherit
+        - id: light
+          name: Light
+        - id: dark
+          name: Dark
+  lockColorScheme:
+    type: switch
+    comment: Keep the selected color scheme from flipping when the visitor toggles the site theme.
+    hidden: true
+  backgroundColor:
+    type: select
+    comment: Solid background color token behind the section content.
+    options:
+      values:
+        - id: none
+          name: None
+        - id: base
+          name: Base
+        - id: surface
+          name: Surface
+        - id: accent
+          name: Accent
+        - id: highlight
+          name: Highlight

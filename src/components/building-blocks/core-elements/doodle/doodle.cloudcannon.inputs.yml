@@ -1,0 +1,44 @@
+source:
+  type: image
+  label: Doodle
+  comment: A line-art mark from the doodle library. Decorative only — it is hidden from screen readers.
+  options:
+    paths:
+      uploads: public/assets/doodle
+      static: public
+size:
+  type: select
+  comment: Rendered size of the mark.
+  options:
+    values:
+      - id: sm
+        name: Small
+      - id: md
+        name: Medium
+      - id: lg
+        name: Large
+      - id: xl
+        name: Extra Large
+invertMode:
+  type: select
+  label: Line colour
+  comment: Auto flips the line art wherever it sits on a dark surface, and follows the visitor's theme. Choose Always or Never to override.
+  options:
+    values:
+      - id: auto
+        name: Auto (flip on dark)
+      - id: always
+        name: Always flip
+      - id: never
+        name: Never flip
+alignmentHorizontal:
+  type: select
+  comment: Horizontal alignment of the mark.
+  options:
+    values:
+      - id: start
+        name: Start
+      - id: center
+        name: Center
+      - id: end
+        name: End

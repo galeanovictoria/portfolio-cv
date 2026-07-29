@@ -1,0 +1,158 @@
+---
+/**
+ * The site's outcome numbers — a hairline-divided row of big accent figures
+ * with a small monospaced caption under each.
+ */
+type Stat = {
+  value?: string;
+  label?: string;
+};
+
+const {
+  stats = [] as Stat[],
+  variant = "boxed",
+  columns = 3,
+  size = "md",
+  class: className,
+  useDefaultEditableBinding = false,
+  "data-children-prop": childrenDataProp,
+  _component,
+  ...htmlAttributes
+} = Astro.props;
+
+const visibleStats = (Array.isArray(stats) ? stats : []).filter(
+  (stat) => stat?.value?.toString().trim() || stat?.label?.trim()
+);
+
+const effectiveChildrenProp = childrenDataProp ?? (useDefaultEditableBinding ? "stats" : null);
+const arrayDataAttributes = effectiveChildrenProp
+  ? { "data-editable": "array", "data-prop": effectiveChildrenProp, "data-direction": "row" }
+  : {};
+
+if (!_component && visibleStats.length === 0) return;
+---
+
+<div
+  class:list={["stat-bar", `variant-${variant}`, `size-${size}`, className]}
+  style={{ "--stat-columns": String(columns) }}
+  {...htmlAttributes}
+>
+  <dl
+    class="stat-bar-items"
+    {...arrayDataAttributes}
+  >
+    {
+      visibleStats.map((stat) => (
+        <div
+          class="stat"
+          data-editable="array-item"
+        >
+          <dd
+            class="stat-value"
+            data-editable="text"
+            data-prop="value"
+          >
+            {stat.value}
+          </dd>
+          <dt
+            class="stat-label"
+            data-editable="text"
+            data-prop="label"
+          >
+            {stat.label}
+          </dt>
+        </div>
+      ))
+    }
+  </dl>
+</div>
+
+<style is:global>
+  @layer components {
+    .stat-bar {
+      margin-top: var(--spacing-lg);
+
+      > .stat-bar-items {
+        display: grid;
+        grid-template-columns: repeat(var(--stat-columns, 3), minmax(0, 1fr));
+        margin: 0;
+
+        > .stat {
+          min-width: 0;
+
+          > .stat-value {
+            color: var(--color-brand);
+            font-family: var(--font-headings);
+            font-weight: var(--font-weight-extrabold);
+            letter-spacing: var(--letter-spacing-heading);
+            line-height: 1;
+            margin: 0;
+          }
+
+          > .stat-label {
+            color: var(--color-text-muted);
+            font-family: var(--font-mono);
+            font-size: var(--font-size-xs);
+            letter-spacing: 0.06em;
+            line-height: 1.4;
+            margin-top: var(--spacing-xs);
+            text-transform: uppercase;
+          }
+        }
+      }
+
+      /* Boxed: an ink-ruled panel, as used inside case-study bodies. */
+      &.variant-boxed > .stat-bar-items {
+        border: 1.5px solid var(--color-border-strong);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+
+        > .stat {
+          border-right: 1.5px solid var(--color-border-strong);
+          padding: var(--spacing-md);
+
+          &:last-child {
+            border-right: 0;
+          }
+        }
+      }
+
+      /* Plain: a rule above, no cells — used on inverted sections. */
+      &.variant-plain > .stat-bar-items {
+        border-top: 1px solid var(--color-border);
+        gap: var(--spacing-lg);
+        padding-top: var(--spacing-xl);
+      }
+
+      &.size-sm > .stat-bar-items > .stat > .stat-value {
+        font-size: var(--font-size-3xl);
+      }
+
+      &.size-md > .stat-bar-items > .stat > .stat-value {
+        font-size: var(--font-size-4xl);
+      }
+
+      &.size-lg > .stat-bar-items > .stat > .stat-value {
+        font-size: var(--font-size-5xl);
+      }
+
+      @media (width < 860px) {
+        > .stat-bar-items {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        &.variant-boxed > .stat-bar-items > .stat {
+          border-bottom: 1.5px solid var(--color-border-strong);
+
+          &:nth-child(2n) {
+            border-right: 0;
+          }
+
+          &:nth-last-child(-n + 1) {
+            border-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+</style>

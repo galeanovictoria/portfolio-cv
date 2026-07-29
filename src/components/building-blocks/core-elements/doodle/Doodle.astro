@@ -1,0 +1,110 @@
+---
+/**
+ * A decorative line-art mark from the doodle library (public/assets/doodle).
+ *
+ * Purely ornamental, so it renders with empty alt text and aria-hidden — it
+ * never adds anything for a screen reader that the adjacent heading doesn't
+ * already say.
+ */
+const {
+  source = "",
+  size = "md",
+  /**
+   * `auto` flips the line art only where it sits on a dark surface, following
+   * the live theme — a build-time boolean would get stranded the moment the
+   * visitor toggles the theme and the section underneath it changes colour.
+   */
+  invertMode = "auto",
+  alignmentHorizontal = "start",
+  class: className,
+  useDefaultEditableBinding = false,
+  "data-prop-src": customDataPropSrc,
+  _component,
+  ...htmlAttributes
+} = Astro.props;
+
+const hasSource = typeof source === "string" && source.trim() !== "";
+
+if (!_component && !hasSource) return;
+
+const isEditable = useDefaultEditableBinding || customDataPropSrc != null;
+const dataAttributes = isEditable
+  ? { "data-editable": "image", "data-prop-src": customDataPropSrc || "source" }
+  : {};
+---
+
+<div
+  class:list={[
+    "doodle",
+    `size-${size}`,
+    `align-${alignmentHorizontal}`,
+    `invert-${invertMode}`,
+    className,
+  ]}
+  {...htmlAttributes}
+>
+  {
+    hasSource && (
+      <img
+        src={source}
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+        {...dataAttributes}
+      />
+    )
+  }
+</div>
+
+<style is:global>
+  @layer components {
+    .doodle {
+      display: flex;
+      margin-top: var(--spacing-md);
+
+      > img {
+        display: block;
+        flex: none;
+        height: auto;
+        object-fit: contain;
+      }
+
+      /* Doodles are single-colour line art; inverting is how they read on the
+         dark ink band. `--invert-on-dark` is 1 inside a dark-themed area and 0
+         inside a light one, so `auto` follows whatever theme is actually
+         applied rather than what was true at build time. */
+      &.invert-auto > img {
+        filter: invert(var(--invert-on-dark, 0));
+      }
+
+      &.invert-always > img {
+        filter: invert(1);
+      }
+
+      &.align-center {
+        justify-content: center;
+      }
+
+      &.align-end {
+        justify-content: flex-end;
+      }
+
+      &.size-sm > img {
+        width: 2.75rem;
+      }
+
+      &.size-md > img {
+        width: 3.25rem;
+      }
+
+      &.size-lg > img {
+        width: 3.5rem;
+      }
+
+      &.size-xl > img {
+        width: 4.5rem;
+      }
+    }
+  }
+</style>

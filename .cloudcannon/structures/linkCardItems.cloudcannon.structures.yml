@@ -1,0 +1,54 @@
+linkCardItems:
+  style: modal
+  values:
+    - label: Link Card
+      icon: photo
+      description: A thumbnail, a title, and a monospaced category line — all one link.
+      value:
+        imageSource: ""
+        imageAlt: ""
+        title: ""
+        meta: ""
+        link: ""
+        newTab: true
+      preview:
+        text:
+          - key: title
+          - Link Card
+        subtext:
+          - key: meta
+          - Add a category
+        image:
+          - key: imageSource
+      picker_preview:
+        text: Link Card
+        subtext: A thumbnail, a title, and a monospaced category line — all one link.
+        icon: photo
+      _inputs:
+        imageSource:
+          type: image
+          label: Thumbnail
+          comment: The card image.
+          options:
+            paths:
+              uploads: src/assets/images
+              static: ""
+            resize_style: contain
+            width: 1200
+        imageAlt:
+          type: textarea
+          label: Thumbnail alt text
+          comment: What the thumbnail shows.
+        title:
+          type: text
+          comment: The card title.
+        meta:
+          type: text
+          comment: Small monospaced line under the title, such as the client or medium.
+        link:
+          type: url
+          comment: Where the card goes.
+        newTab:
+          type: switch
+          label: Open in a new tab
+          comment: Use for links that leave the site.

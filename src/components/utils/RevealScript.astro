@@ -1,0 +1,117 @@
+---
+/**
+ * Scroll reveals for any element marked `data-reveal`.
+ *
+ * Runs inline in <head> so the hidden state applies before first paint (see the
+ * [data-reveal] rules in styles/_site.css, gated on `html[data-reveal-ready]`).
+ * Because the CSS hides content until JS un-hides it, every path that could
+ * leave the script out of the loop has to be handled explicitly or the section
+ * disappears:
+ *
+ * - No JS, no IntersectionObserver, or reduced motion → reveal everything.
+ * - CloudCannon's visual editor → reveal everything. It re-renders components
+ *   as you type and its preview doesn't scroll like a visitor's page, so
+ *   animating there means sections that never come back.
+ * - DOM inserted later (view transitions, live editing) → a MutationObserver
+ *   picks it up, so nothing inserted after load stays stuck hidden.
+ */
+---
+
+<script is:inline>
+  (function () {
+    var root = document.documentElement;
+    var observer = null;
+    var mutations = null;
+
+    function reveal(element) {
+      element.setAttribute("data-revealed", "");
+    }
+
+    /** Give up on animating and show everything, now and in future. */
+    function revealAllAndStop() {
+      root.removeAttribute("data-reveal-ready");
+
+      if (observer) {
+        observer.disconnect();
+        observer = null;
+      }
+
+      if (mutations) {
+        mutations.disconnect();
+        mutations = null;
+      }
+
+      Array.prototype.forEach.call(document.querySelectorAll("[data-reveal]"), reveal);
+    }
+
+    function shouldAnimate() {
+      if (window.inEditorMode) return false;
+      if (!("IntersectionObserver" in window)) return false;
+      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        return false;
+      }
+
+      return true;
+    }
+
+    function observe(element) {
+      if (element.hasAttribute("data-revealed")) return;
+      if (observer) observer.observe(element);
+      else reveal(element);
+    }
+
+    function setup() {
+      if (!shouldAnimate()) {
+        revealAllAndStop();
+        return;
+      }
+
+      if (!observer) {
+        observer = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (!entry.isIntersecting) return;
+              reveal(entry.target);
+              observer.unobserve(entry.target);
+            });
+          },
+          { threshold: 0.12, rootMargin: "0px 0px -5% 0px" }
+        );
+      }
+
+      Array.prototype.forEach.call(document.querySelectorAll("[data-reveal]"), observe);
+
+      if (!mutations && document.body) {
+        mutations = new MutationObserver(function (records) {
+          records.forEach(function (record) {
+            Array.prototype.forEach.call(record.addedNodes, function (node) {
+              if (node.nodeType !== 1) return;
+              if (node.hasAttribute("data-reveal")) observe(node);
+              Array.prototype.forEach.call(node.querySelectorAll("[data-reveal]"), observe);
+            });
+          });
+        });
+
+        mutations.observe(document.body, { childList: true, subtree: true });
+      }
+
+      // Safety net: never leave content hidden if the observer misses something.
+      setTimeout(function () {
+        Array.prototype.forEach.call(
+          document.querySelectorAll("[data-reveal]:not([data-revealed])"),
+          reveal
+        );
+      }, 3000);
+    }
+
+    root.setAttribute("data-reveal-ready", "");
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", setup, { once: true });
+    } else {
+      setup();
+    }
+
+    document.addEventListener("astro:page-load", setup);
+  })();
+</script>

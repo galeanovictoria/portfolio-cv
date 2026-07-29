@@ -1,0 +1,39 @@
+backLabel:
+  type: text
+  label: Back link text
+  comment: Route back to the site, shown above the name and hidden when printing. Both the text and the link are needed for it to appear.
+backLink:
+  type: url
+  label: Back link
+  comment: Where the back link goes.
+  options:
+    hide_link_to_email_address: true
+    hide_link_to_telephone: true
+name:
+  type: text
+  comment: The name at the top of the CV. Rendered as the page's h1.
+role:
+  type: text
+  comment: Job title line beneath the name.
+contact:
+  type: markdown
+  comment: Contact details, one per line. Links are supported.
+  options:
+    blockquote: false
+    bold: false
+    format:
+    italic: false
+    link: true
+    bulletedlist: false
+    numberedlist: false
+summary:
+  type: markdown
+  comment: The opening summary paragraphs.
+  options:
+    blockquote: false
+    bold: true
+    format:
+    italic: true
+    link: true
+    bulletedlist: false
+    numberedlist: false

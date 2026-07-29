@@ -1,0 +1,127 @@
+---
+import MarkdownIt from "markdown-it";
+
+/**
+ * A row of monospaced pills — the site uses these for scope, role, and
+ * capability tags under case studies and skill groups.
+ */
+type Tag = { text?: string } | string;
+
+const {
+  tags = [] as Tag[],
+  tone = "outline",
+  size = "sm",
+  alignmentHorizontal = "start",
+  class: className,
+  useDefaultEditableBinding = false,
+  "data-children-prop": childrenDataProp,
+  _component,
+  ...htmlAttributes
+} = Astro.props;
+
+const md = MarkdownIt({ html: true });
+
+const normalizedTags = (Array.isArray(tags) ? tags : [])
+  .map((tag) => (typeof tag === "string" ? tag : tag?.text))
+  .filter((text): text is string => Boolean(text?.trim()));
+
+const effectiveChildrenProp = childrenDataProp ?? (useDefaultEditableBinding ? "tags" : null);
+const arrayDataAttributes = effectiveChildrenProp
+  ? { "data-editable": "array", "data-prop": effectiveChildrenProp, "data-direction": "row" }
+  : {};
+
+if (!_component && normalizedTags.length === 0) return;
+---
+
+<div
+  class:list={["tag-list", className]}
+  {...htmlAttributes}
+>
+  <ul
+    class:list={["tag-list-items", `tone-${tone}`, `size-${size}`, `align-${alignmentHorizontal}`]}
+    {...arrayDataAttributes}
+  >
+    {
+      normalizedTags.map((text) => (
+        <li
+          class="tag"
+          data-editable="array-item"
+        >
+          <span
+            data-editable="text"
+            data-prop="text"
+            set:html={md.renderInline(text)}
+          />
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style is:global>
+  @layer components {
+    .tag-list {
+      margin-top: var(--spacing-md);
+
+      > .tag-list-items {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-sm);
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        &.align-center {
+          justify-content: center;
+        }
+
+        &.align-end {
+          justify-content: flex-end;
+        }
+
+        > .tag {
+          border-radius: var(--radius-full);
+          font-family: var(--font-mono);
+          line-height: 1.4;
+          padding: 0.35em 0.9em;
+        }
+
+        &.size-xs > .tag {
+          font-size: var(--font-size-xs);
+        }
+
+        &.size-sm > .tag {
+          font-size: var(--font-size-sm);
+        }
+
+        &.size-md > .tag {
+          font-size: var(--font-size-md);
+        }
+
+        &.tone-outline > .tag {
+          background-color: var(--color-bg-surface);
+          border: 1px solid var(--color-border);
+          color: var(--color-text);
+        }
+
+        &.tone-subtle > .tag {
+          background-color: transparent;
+          border: 1px solid var(--color-border);
+          color: inherit;
+        }
+
+        &.tone-accent > .tag {
+          background-color: transparent;
+          border: 1px solid var(--color-brand);
+          color: var(--color-brand);
+        }
+
+        &.tone-solid > .tag {
+          background-color: var(--color-bg-brand);
+          border: 1px solid transparent;
+          color: var(--color-text-on-brand);
+        }
+      }
+    }
+  }
+</style>

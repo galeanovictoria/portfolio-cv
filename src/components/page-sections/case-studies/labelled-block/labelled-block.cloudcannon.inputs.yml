@@ -1,0 +1,18 @@
+label:
+  type: text
+  comment: The short label in the left column, such as "The problem" or "What I did".
+labelLevel:
+  type: select
+  comment: Heading level for the label. Keep the page order logical.
+  options:
+    values:
+      - id: h2
+        name: H2
+      - id: h3
+        name: H3
+contentSections:
+  type: array
+  label: Content
+  comment: Blocks in the wide column — prose, quotes, tag lists, stat bars, figure grids.
+  options:
+    structures: _structures.containerSections

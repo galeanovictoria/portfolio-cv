@@ -1,0 +1,80 @@
+resumeItems:
+  style: modal
+  values:
+    - label: Resume Entry
+      icon: work
+      description: A role, project, or skill group. Every field is optional.
+      value:
+        title: ""
+        titleLink: ""
+        date: ""
+        description: ""
+        body: ""
+        detail: ""
+        tags: []
+        quoteText: ""
+        quoteAttribution: ""
+      preview:
+        text:
+          - key: title
+          - Resume Entry
+        subtext:
+          - key: date
+          - key: description
+      picker_preview:
+        text: Resume Entry
+        subtext: A role, project, or skill group. Every field is optional.
+        icon: work
+      _inputs:
+        title:
+          type: text
+          comment: Role and company, project name, or skill group.
+        titleLink:
+          type: url
+          comment: Optional link on the title. Opens in a new tab.
+          options:
+            hide_link_to_email_address: true
+            hide_link_to_telephone: true
+        date:
+          type: text
+          comment: The dates, such as "2019—NOW". Shown right-aligned.
+        description:
+          type: markdown
+          comment: A short paragraph about the entry.
+          options:
+            blockquote: false
+            bold: true
+            format:
+            italic: true
+            link: true
+            bulletedlist: false
+            numberedlist: false
+        body:
+          type: markdown
+          label: Detail
+          comment: Longer detail — this is where bullet lists belong.
+          options:
+            blockquote: false
+            bold: true
+            format:
+            italic: true
+            link: true
+            bulletedlist: true
+            numberedlist: true
+        detail:
+          type: text
+          label: Process note
+          comment: A single monospaced line, such as a research or process summary.
+        tags:
+          type: array
+          comment: Outcome or scope pills for this entry.
+          options:
+            structures: _structures.tagItems
+        quoteText:
+          type: text
+          label: Quote
+          comment: An optional client quote for this entry.
+        quoteAttribution:
+          type: text
+          label: Quote attribution
+          comment: Who said it, and their role.

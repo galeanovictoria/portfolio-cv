@@ -1,0 +1,343 @@
+/* Site-level look and feel.
+   Lives in the `overrides` layer (declared last in BaseLayout) so it can
+   restyle library components without editing them. Anything here is a
+   deliberate brand decision — pill buttons, mono labels, framed media,
+   scroll reveals — rather than a fix. */
+
+@layer overrides {
+  /* --- Anchor navigation -------------------------------------------------- */
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  /* Anchored sections must clear the sticky header (5rem) with room to spare,
+     or the target's heading lands underneath it. */
+  [id] {
+    scroll-margin-top: 7.5rem;
+  }
+
+  /* --- Overflow ----------------------------------------------------------- */
+
+  /* Wide media inside a narrow grid track is the usual cause of a page that
+     scrolls sideways on a phone. `clip` on the root stops it escaping without
+     creating a scroll container the way `hidden` does. */
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
+  img,
+  svg,
+  canvas,
+  video {
+    max-width: 100%;
+  }
+
+  /* --- Buttons: mono pills ------------------------------------------------ */
+
+  .button > .button-inner {
+    border-radius: var(--radius-full);
+    border-width: 1.5px;
+    font-family: var(--font-mono);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    padding-block: 0.95em;
+    padding-inline: 1.5em;
+
+    &.size-sm {
+      font-size: var(--font-size-xs);
+    }
+
+    &.size-md {
+      font-size: var(--font-size-sm);
+    }
+
+    &.size-lg {
+      font-size: var(--font-size-md);
+    }
+
+    &.icon-only {
+      aspect-ratio: 1;
+      padding: 0.7em;
+    }
+
+    &.variant-primary:hover,
+    &.variant-primary:focus-visible {
+      background-color: var(--color-brand);
+      color: var(--color-brand-on);
+    }
+
+    &.variant-tertiary {
+      border-color: var(--color-border-strong);
+
+      &:hover,
+      &:focus-visible {
+        background-color: var(--color-bg-inverse);
+        border-color: var(--color-border-strong);
+        color: var(--color-text-inverse);
+      }
+    }
+
+    &.variant-text {
+      font-family: var(--font-mono);
+      font-size: var(--font-size-sm);
+      letter-spacing: 0.02em;
+    }
+  }
+
+  /* Button groups default to filling their container so they can be centred.
+     Sections that sit a group beside other content opt out with this class, so
+     the group is only ever as wide as its buttons. */
+  .button-group.inline-buttons {
+    container-type: normal;
+    flex: 0 0 auto;
+    margin-top: 0;
+    max-width: 100%;
+    width: auto;
+
+    > .button-group__items {
+      width: auto;
+    }
+  }
+
+  /* --- Quotes ------------------------------------------------------------- */
+
+  /* Testimonial renders a <blockquote> and draws this rule on its own inner
+     element, so it has to sit out or the quote gets two lines. */
+  blockquote:not(.testimonial) {
+    border-left: 3px solid var(--color-brand);
+    padding-left: var(--spacing-md);
+  }
+
+  /* The site sets quotes as an accent rule plus serif italic, not a card. */
+  .testimonial > .testimonial-inner {
+    background: none;
+    border: 0;
+    border-left: 3px solid var(--color-brand);
+    border-radius: 0;
+    gap: 0;
+    padding: 0 0 0 var(--spacing-md);
+
+    > .quote * {
+      color: var(--color-text);
+      font-family: var(--font-serif);
+      font-size: var(--font-size-xl);
+      font-style: italic;
+      line-height: 1.45;
+    }
+
+    > .author {
+      margin-top: var(--spacing-sm);
+
+      /* Name and role read as one credit line, not two stacked ones. */
+      > .author-content br {
+        display: none;
+      }
+
+      > .author-content {
+        color: var(--color-text-muted);
+        font-family: var(--font-mono);
+        font-size: var(--font-size-xs);
+        letter-spacing: 0.05em;
+        line-height: 1.5;
+        text-transform: uppercase;
+
+        .name {
+          font-weight: 500;
+        }
+
+        .name::before {
+          content: "— ";
+        }
+
+        .description::before {
+          content: ", ";
+        }
+      }
+    }
+  }
+
+  /* In the selected-work list the quote is an aside to the write-up, so it sits
+     a step quieter than the one on the case study's own page. */
+  .case-study-row .testimonial > .testimonial-inner {
+    > .quote * {
+      color: var(--color-text-muted);
+      font-size: var(--font-size-lg);
+      line-height: 1.5;
+    }
+  }
+
+  /* --- Cards -------------------------------------------------------------- */
+
+  .card > .card-inner {
+    &.border {
+      border-color: var(--color-border-strong);
+      border-width: 1.5px;
+    }
+
+    &.rounded {
+      border-radius: var(--radius-lg);
+    }
+  }
+
+  /* Linked cards lift rather than scale — scaling clips inside framed media. */
+  .card > a.card-inner:hover,
+  .card > button.card-inner:hover {
+    transform: translateY(-6px);
+  }
+
+  /* Cards stacked inside a card are bands of one panel, so they meet flush and
+     are separated by a hairline rather than floated apart by their own margin. */
+  .card .card-content > .card {
+    margin-top: 0;
+  }
+
+  .card .card-content > .card + .card {
+    border-top: 1.5px solid var(--color-border-strong);
+  }
+
+  /* --- Navigation --------------------------------------------------------- */
+
+  .main-nav {
+    backdrop-filter: blur(10px);
+    background-color: color-mix(in srgb, var(--color-bg) 82%, transparent);
+    border-bottom: 1px solid transparent;
+    transition:
+      background-color 0.3s ease,
+      border-color 0.3s ease;
+
+    &[data-scrolled] {
+      background-color: color-mix(in srgb, var(--color-bg) 92%, transparent);
+      border-bottom-color: var(--color-border);
+    }
+
+    .bar .bar-list > .nav-item > a {
+      color: var(--color-text-strong);
+      font-family: var(--font-mono);
+      font-size: var(--font-size-sm);
+      letter-spacing: 0.04em;
+      opacity: 0.75;
+      text-decoration: none;
+
+      &:hover,
+      &[aria-current="page"] {
+        color: var(--color-brand);
+        opacity: 1;
+      }
+    }
+  }
+
+  .footer .bar .bar-list > .nav-item > a {
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    letter-spacing: 0.04em;
+    text-decoration: none;
+
+    &:hover {
+      color: var(--color-brand);
+    }
+  }
+
+  /* --- Scroll reveals ----------------------------------------------------- */
+
+  [data-reveal] {
+    transition:
+      opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+      transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  html[data-reveal-ready] [data-reveal]:not([data-revealed]) {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html[data-reveal-ready] [data-reveal]:not([data-revealed]) {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+/* --- Print: the CV is meant to be saved as a PDF ------------------------- */
+
+@media print {
+  @page {
+    margin: 14mm;
+    size: letter;
+  }
+
+  /* Unrevealed sections are transparent on screen; printing must never
+     inherit that or the page comes out blank. */
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  :root,
+  [data-theme] {
+    --color-bg: #fff;
+    --color-bg-surface: #fff;
+    -webkit-print-color-adjust: exact;
+
+    print-color-adjust: exact;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  /* Site chrome and on-page actions carry nothing onto paper. */
+  .main-nav,
+  .footer,
+  .palette-switcher,
+  .theme-toggle,
+  .cta-panel,
+  .page-pager,
+  .marquee-band,
+  .resume-header-back,
+  .case-study-header-back {
+    display: none !important;
+  }
+
+  .custom-section > .outer-content > .content {
+    max-width: none;
+    padding-block: var(--spacing-md);
+    padding-inline: 0;
+  }
+
+  /* Keep a role and its bullet points on one page. */
+  .resume-item,
+  .resume-section-label,
+  .stat-bar,
+  .case-study-header-facts,
+  .figure-grid .figure {
+    break-inside: avoid;
+  }
+
+  .resume-section-label,
+  .mono-label {
+    break-after: avoid;
+  }
+
+  p,
+  li {
+    orphans: 3;
+    widows: 3;
+  }
+
+  a {
+    text-decoration: none;
+  }
+}

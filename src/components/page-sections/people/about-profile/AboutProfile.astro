@@ -1,0 +1,208 @@
+---
+import CustomSection from "@builders/custom-section/CustomSection.astro";
+import Doodle from "@core-elements/doodle/Doodle.astro";
+import Heading from "@core-elements/heading/Heading.astro";
+import Image from "@core-elements/image/Image.astro";
+import MonoLabel from "@core-elements/mono-label/MonoLabel.astro";
+import StatBar from "@core-elements/stat-bar/StatBar.astro";
+import TagList from "@core-elements/tag-list/TagList.astro";
+import Text from "@core-elements/text/Text.astro";
+
+/**
+ * The About section: a portrait and skill pills on one side, a long serif
+ * biography and a row of career figures on the other.
+ *
+ * Usually run with `colorScheme: dark` so it reads as the site's ink band.
+ */
+const {
+  eyebrow = "",
+  heading = "",
+  headingLevel = "h2",
+  body = "",
+  aside = "",
+  imageSource = "",
+  imageAlt = "",
+  imageRatio = "4 / 5",
+  skills = [],
+  stats = [],
+  doodleSource = "",
+  sectionLabel,
+  maxContentWidth = "2xl",
+  paddingHorizontal = "lg",
+  paddingVertical = "4xl",
+  colorScheme = "dark",
+  backgroundColor,
+  class: className,
+  useDefaultEditableBinding = false,
+  _component,
+  ...htmlAttributes
+} = Astro.props;
+
+const hasImage = typeof imageSource === "string" && imageSource.trim() !== "";
+---
+
+<CustomSection
+  class:list={["about-profile", className]}
+  label={sectionLabel}
+  maxContentWidth={maxContentWidth}
+  paddingHorizontal={paddingHorizontal}
+  paddingVertical={paddingVertical}
+  colorScheme={colorScheme}
+  backgroundColor={backgroundColor}
+  useDefaultEditableBinding={useDefaultEditableBinding}
+  {...htmlAttributes}
+>
+  <div class="about-profile-inner">
+    <div
+      class="about-profile-side"
+      data-reveal
+    >
+      {
+        hasImage && (
+          <div
+            class="about-profile-portrait"
+            style={{ "--portrait-ratio": imageRatio }}
+          >
+            <Image
+              source={imageSource}
+              alt={imageAlt}
+              data-prop-src="imageSource"
+              data-prop-alt="imageAlt"
+            />
+          </div>
+        )
+      }
+      <TagList
+        class="about-profile-skills"
+        tags={skills}
+        tone="subtle"
+        size="xs"
+        data-children-prop="skills"
+      />
+    </div>
+
+    <div
+      class="about-profile-main"
+      data-reveal
+    >
+      <Doodle
+        source={doodleSource}
+        size="xl"
+        data-prop-src="doodleSource"
+      />
+      <MonoLabel
+        class="about-profile-eyebrow"
+        text={eyebrow}
+        tone="accent"
+        size="sm"
+        tracking="wide"
+        data-prop="eyebrow"
+      />
+      <Heading
+        class="about-profile-heading"
+        level={headingLevel}
+        size="xl"
+        data-prop="heading"
+      >
+        {heading}
+      </Heading>
+      <Text
+        class="about-profile-body prose"
+        text={body}
+        data-prop="body"
+      />
+      <Text
+        class="about-profile-aside prose"
+        text={aside}
+        data-prop="aside"
+      />
+      <StatBar
+        class="about-profile-stats"
+        stats={stats}
+        variant="plain"
+        columns={3}
+        size="md"
+        data-children-prop="stats"
+      />
+    </div>
+  </div>
+</CustomSection>
+
+<style is:global>
+  @layer page-sections {
+    .about-profile {
+      > .outer-content > .content > .about-profile-inner {
+        align-items: start;
+        container-type: inline-size;
+        display: grid;
+        gap: var(--spacing-3xl);
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+
+        > .about-profile-side {
+          min-width: 0;
+
+          > .about-profile-portrait {
+            aspect-ratio: var(--portrait-ratio, 4 / 5);
+            background-color: var(--color-bg-surface);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+
+            > .image {
+              height: 100%;
+              margin-top: 0 !important;
+
+              .image-inner,
+              picture {
+                height: 100%;
+              }
+
+              img {
+                height: 100%;
+                object-fit: cover;
+                width: 100%;
+              }
+            }
+          }
+        }
+
+        > .about-profile-main {
+          min-width: 0;
+
+          > .doodle {
+            margin-top: 0;
+          }
+
+          > .about-profile-heading {
+            line-height: 1.02;
+            margin-block: var(--spacing-md) 0;
+          }
+
+          > .about-profile-body p {
+            font-size: var(--font-size-xl);
+          }
+
+          > .about-profile-aside p {
+            font-size: var(--font-size-lg);
+            font-style: italic;
+            opacity: 0.82;
+          }
+
+          > .about-profile-stats {
+            margin-top: var(--spacing-2xl);
+          }
+        }
+      }
+
+      @container (max-width: 860px) {
+        > .outer-content > .content > .about-profile-inner {
+          gap: var(--spacing-2xl);
+          grid-template-columns: minmax(0, 1fr);
+
+          > .about-profile-side > .about-profile-portrait {
+            max-width: 21rem;
+          }
+        }
+      }
+    }
+  }
+</style>

@@ -1,0 +1,221 @@
+---
+import CustomSection from "@builders/custom-section/CustomSection.astro";
+import Bar from "@components/navigation/bar/Bar.astro";
+import PaletteSwitcher from "@components/navigation/palette-switcher/PaletteSwitcher.astro";
+import Button from "@core-elements/button/Button.astro";
+import Divider from "@core-elements/divider/Divider.astro";
+import Image from "@core-elements/image/Image.astro";
+import Text from "@core-elements/text/Text.astro";
+import ButtonGroup from "@wrappers/button-group/ButtonGroup.astro";
+import paletteData from "@data/palettes.json";
+import type { SocialLink } from "../../../types";
+
+const {
+  links = [],
+  socials = [] as SocialLink[],
+  footerText = "",
+  logoSource,
+  logoAlternateSource,
+  logoAlt,
+  /** Wordmark alternative to an image logo, matching the main nav. */
+  logoText,
+  logoSubtext,
+  paletteSwitcher = false,
+  useDefaultEditableBinding: _useDefaultEditableBinding = false,
+  _component,
+  ...htmlAttributes
+} = Astro.props;
+
+const hasBrand = Boolean(logoText || logoSource);
+const hasLinks = links.length > 0;
+const hasSocials = socials.length > 0;
+
+// Each row is optional, so emptying links or socials collapses the footer
+// rather than leaving a gap where they used to be.
+const hasTopRow = hasBrand || hasLinks;
+const hasBottomRow = Boolean(footerText) || hasSocials || paletteSwitcher;
+---
+
+<footer
+  class="footer"
+  {...htmlAttributes}
+>
+  <CustomSection
+    maxContentWidth="2xl"
+    paddingHorizontal="md"
+    paddingVertical="2xl"
+    useDefaultEditableBinding={false}
+  >
+    {
+      hasTopRow && (
+        <div class="footer-content">
+          {hasBrand && (
+            <div class="content-container">
+              {logoText ? (
+                <span class="footer-wordmark">
+                  <span class="footer-wordmark-name">{logoText}</span>
+                  {logoSubtext && <span class="footer-wordmark-role">{logoSubtext}</span>}
+                </span>
+              ) : (
+                <Image
+                  source={logoSource}
+                  alternateSource={logoAlternateSource}
+                  alt={logoAlt}
+                  class="footer-logo"
+                  useDefaultEditableBinding={false}
+                />
+              )}
+            </div>
+          )}
+          {hasLinks && (
+            <div class="content-container">
+              <Bar
+                navData={links}
+                useDefaultEditableBinding={false}
+              />
+            </div>
+          )}
+        </div>
+      )
+    }
+
+    {hasTopRow && hasBottomRow && <Divider />}
+
+    {
+      hasBottomRow && (
+        <div class="footer-content">
+          <div class="content-container">
+            <Text
+              class="footer-legal-text"
+              text={footerText || ""}
+              data-prop=""
+              useDefaultEditableBinding={false}
+            />
+          </div>
+          <div class="content-container footer-end">
+            {paletteSwitcher && (
+              <PaletteSwitcher
+                class="footer-palette-switcher"
+                palettes={paletteData.palettes}
+                defaultPalette={paletteData.defaultPalette}
+                legend={paletteData.legend}
+                showLegend={true}
+              />
+            )}
+            {hasSocials && (
+              <ButtonGroup
+                class="inline-buttons"
+                alignmentHorizontal="end"
+                useDefaultEditableBinding={false}
+              >
+                {socials.map((social) => (
+                  <Button
+                    variant="ghost"
+                    size="lg"
+                    iconName={social.icon}
+                    link={social.link}
+                    hideText="true"
+                    aria-label={
+                      social.label || `Visit our ${social.icon.replace(/^.*\//, "")} page`
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    useDefaultEditableBinding={false}
+                  />
+                ))}
+              </ButtonGroup>
+            )}
+          </div>
+        </div>
+      )
+    }
+  </CustomSection>
+</footer>
+
+<style is:global>
+  @layer page-sections {
+    .footer {
+      border-top: 1px solid var(--color-border);
+      container-type: inline-size;
+
+      .footer-content {
+        @container (min-width: 600px) {
+          align-items: center;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+        }
+
+        .content-container {
+          flex: 1;
+        }
+      }
+
+      .footer-legal-text {
+        color: var(--color-text-muted);
+        font-family: var(--font-mono);
+        font-size: var(--font-size-xs);
+        text-align: center;
+        @container (min-width: 600px) {
+          text-align: start;
+        }
+      }
+
+      .footer-end {
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-md);
+        justify-content: center;
+
+        @container (min-width: 600px) {
+          justify-content: flex-end;
+        }
+      }
+
+      .footer-wordmark {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        line-height: 1.1;
+        text-align: center;
+
+        @container (min-width: 600px) {
+          text-align: start;
+        }
+
+        > .footer-wordmark-name {
+          color: var(--color-text-strong);
+          font-family: var(--font-headings);
+          font-size: var(--font-size-lg);
+          font-weight: var(--font-weight-extrabold);
+          letter-spacing: -0.01em;
+        }
+
+        > .footer-wordmark-role {
+          color: var(--color-text-muted);
+          font-family: var(--font-mono);
+          font-size: var(--font-size-xs);
+          letter-spacing: var(--letter-spacing-label);
+          text-transform: uppercase;
+        }
+      }
+
+      .footer-logo {
+        flex-shrink: 0;
+        margin-top: 0 !important;
+
+        img {
+          margin-inline: auto;
+          margin-bottom: var(--spacing-md);
+          max-height: 2em;
+          max-width: min(20em, 100%);
+          width: auto;
+          @container (min-width: 600px) {
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+</style>

@@ -1,0 +1,102 @@
+---
+import CustomSection from "@builders/custom-section/CustomSection.astro";
+import Doodle from "@core-elements/doodle/Doodle.astro";
+import Heading from "@core-elements/heading/Heading.astro";
+import MonoLabel from "@core-elements/mono-label/MonoLabel.astro";
+
+/**
+ * A rule-underlined section title: an optional doodle beside the heading and a
+ * monospaced counter or note pushed to the far edge.
+ */
+const {
+  heading = "",
+  headingLevel = "h2",
+  note = "",
+  doodleSource = "",
+  sectionLabel,
+  maxContentWidth = "2xl",
+  paddingHorizontal = "lg",
+  paddingVertical = "3xl",
+  colorScheme = "inherit",
+  backgroundColor,
+  class: className,
+  useDefaultEditableBinding = false,
+  _component,
+  ...htmlAttributes
+} = Astro.props;
+---
+
+<CustomSection
+  class:list={["section-header", className]}
+  label={sectionLabel}
+  maxContentWidth={maxContentWidth}
+  paddingHorizontal={paddingHorizontal}
+  paddingVertical={paddingVertical}
+  colorScheme={colorScheme}
+  backgroundColor={backgroundColor}
+  useDefaultEditableBinding={useDefaultEditableBinding}
+  {...htmlAttributes}
+>
+  <div
+    class="section-header-row"
+    data-reveal
+  >
+    <div class="section-header-title">
+      <Doodle
+        source={doodleSource}
+        size="lg"
+        data-prop-src="doodleSource"
+      />
+      <Heading
+        level={headingLevel}
+        size="2xl"
+        data-prop="heading"
+      >
+        {heading}
+      </Heading>
+    </div>
+    <MonoLabel
+      class="section-header-note"
+      text={note}
+      tone="muted"
+      size="sm"
+      tracking="none"
+      uppercase={false}
+      data-prop="note"
+    />
+  </div>
+</CustomSection>
+
+<style is:global>
+  @layer page-sections {
+    .section-header {
+      > .outer-content > .content > .section-header-row {
+        align-items: baseline;
+        border-bottom: 2px solid var(--color-border-strong);
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-md);
+        justify-content: space-between;
+        padding-bottom: var(--spacing-md);
+
+        > .section-header-title {
+          align-items: center;
+          display: flex;
+          gap: var(--spacing-md);
+
+          > .doodle {
+            margin-top: 0;
+          }
+
+          > .heading {
+            margin-block: 0;
+          }
+        }
+
+        > .section-header-note {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+</style>

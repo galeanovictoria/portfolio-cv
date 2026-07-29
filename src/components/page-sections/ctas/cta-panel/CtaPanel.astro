@@ -1,0 +1,131 @@
+---
+import CustomSection from "@builders/custom-section/CustomSection.astro";
+import Doodle from "@core-elements/doodle/Doodle.astro";
+import Heading from "@core-elements/heading/Heading.astro";
+import MonoLabel from "@core-elements/mono-label/MonoLabel.astro";
+import Text from "@core-elements/text/Text.astro";
+import ButtonGroup from "@wrappers/button-group/ButtonGroup.astro";
+
+/**
+ * A bordered paper panel: doodle, eyebrow, heading and supporting line on the
+ * left, buttons pushed to the right. The site uses it for the Writing block.
+ */
+const {
+  eyebrow = "",
+  heading = "",
+  headingLevel = "h2",
+  subtext = "",
+  doodleSource = "",
+  buttonSections = [],
+  sectionLabel,
+  maxContentWidth = "2xl",
+  paddingHorizontal = "lg",
+  paddingVertical = "3xl",
+  colorScheme = "inherit",
+  backgroundColor,
+  class: className,
+  useDefaultEditableBinding = false,
+  _component,
+  ...htmlAttributes
+} = Astro.props;
+---
+
+<CustomSection
+  class:list={["cta-panel", className]}
+  label={sectionLabel}
+  maxContentWidth={maxContentWidth}
+  paddingHorizontal={paddingHorizontal}
+  paddingVertical={paddingVertical}
+  colorScheme={colorScheme}
+  backgroundColor={backgroundColor}
+  useDefaultEditableBinding={useDefaultEditableBinding}
+  {...htmlAttributes}
+>
+  <div
+    class="cta-panel-inner"
+    data-reveal
+  >
+    <div class="cta-panel-body">
+      <Doodle
+        source={doodleSource}
+        size="sm"
+        data-prop-src="doodleSource"
+      />
+      <MonoLabel
+        class="cta-panel-eyebrow"
+        text={eyebrow}
+        tone="accent"
+        size="sm"
+        tracking="label"
+        data-prop="eyebrow"
+      />
+      <Heading
+        class="cta-panel-heading"
+        level={headingLevel}
+        size="lg"
+        data-prop="heading"
+      >
+        {heading}
+      </Heading>
+      <Text
+        class="cta-panel-subtext prose"
+        text={subtext}
+        data-prop="subtext"
+      />
+    </div>
+    <ButtonGroup
+      class="cta-panel-buttons inline-buttons"
+      buttonSections={buttonSections}
+      data-children-prop="buttonSections"
+    />
+  </div>
+</CustomSection>
+
+<style is:global>
+  @layer page-sections {
+    .cta-panel {
+      > .outer-content > .content > .cta-panel-inner {
+        align-items: center;
+        background-color: var(--color-bg-surface);
+        border: 1.5px solid var(--color-border-strong);
+        border-radius: var(--radius-xl);
+        container-type: inline-size;
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-lg);
+        justify-content: space-between;
+        padding: var(--spacing-2xl);
+
+        > .cta-panel-body {
+          flex: 1 1 22rem;
+          min-width: 0;
+
+          > .doodle {
+            margin-top: 0;
+          }
+
+          > .cta-panel-heading {
+            margin-block: var(--spacing-sm) 0;
+          }
+
+          > .cta-panel-subtext {
+            color: var(--color-text-muted);
+            max-width: 35rem;
+
+            p {
+              font-size: var(--font-size-lg);
+            }
+          }
+        }
+
+        @container (max-width: 620px) {
+          padding: var(--spacing-xl) var(--spacing-lg);
+
+          > .cta-panel-buttons {
+            flex-basis: 100%;
+          }
+        }
+      }
+    }
+  }
+</style>

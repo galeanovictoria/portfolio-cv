@@ -1,0 +1,40 @@
+tags:
+  type: array
+  comment: The pills to display, in order.
+  options:
+    structures: _structures.tagItems
+tone:
+  type: select
+  comment: Pill styling.
+  options:
+    values:
+      - id: outline
+        name: Outline on surface
+      - id: subtle
+        name: Subtle (inherits text colour)
+      - id: accent
+        name: Accent outline
+      - id: solid
+        name: Solid
+size:
+  type: select
+  comment: Pill text size.
+  options:
+    values:
+      - id: xs
+        name: Extra Small
+      - id: sm
+        name: Small
+      - id: md
+        name: Medium
+alignmentHorizontal:
+  type: select
+  comment: Horizontal alignment of the row.
+  options:
+    values:
+      - id: start
+        name: Start
+      - id: center
+        name: Center
+      - id: end
+        name: End

@@ -1,0 +1,20 @@
+wordItems:
+  style: modal
+  values:
+    - label: Word
+      icon: text_fields
+      description: A single word or short phrase.
+      value:
+        text: ""
+      preview:
+        text:
+          - key: text
+          - Word
+      picker_preview:
+        text: Word
+        subtext: A single word or short phrase.
+        icon: text_fields
+      _inputs:
+        text:
+          type: text
+          comment: The word or short phrase.

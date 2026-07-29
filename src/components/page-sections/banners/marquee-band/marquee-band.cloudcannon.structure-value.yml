@@ -1,0 +1,25 @@
+label: Marquee Band
+icon: swap_horiz
+description: A full-width accent band of scrolling capability words.
+value:
+  _component: page-sections/banners/marquee-band
+  sectionLabel: Capabilities
+  items:
+    - text: Product Design
+    - text: Design Systems
+    - text: UX Research
+  separator: ✳
+  duration: 40
+preview:
+  text:
+    - Marquee Band
+  subtext:
+    - key: items[0].text
+    - Add words
+  icon: swap_horiz
+picker_preview:
+  text: Marquee Band
+  subtext: A full-width accent band of scrolling capability words.
+  icon: swap_horiz
+_inputs_from_glob:
+  - /src/components/page-sections/banners/marquee-band/marquee-band.cloudcannon.inputs.yml

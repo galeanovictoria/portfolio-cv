@@ -1,0 +1,21 @@
+previousLabel:
+  type: text
+  comment: Text for the backwards link, such as "← All work". Both the label and the link are needed for it to show.
+previousLink:
+  type: url
+  comment: Where the backwards link goes.
+  options:
+    hide_link_to_email_address: true
+    hide_link_to_telephone: true
+nextLabel:
+  type: text
+  comment: "Text for the forwards link, such as Next: TwitchCon →. Set large, since it is the likely next click."
+nextLink:
+  type: url
+  comment: Where the forwards link goes.
+  options:
+    hide_link_to_email_address: true
+    hide_link_to_telephone: true
+sectionLabel:
+  type: text
+  comment: Accessible name for this navigation block.
