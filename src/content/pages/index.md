@@ -746,7 +746,7 @@ pageSections:
   - _component: page-sections/ctas/cta-panel
     sectionLabel: Writing
     eyebrow: Writing
-    heading: I write about design &amp; building on the web
+    heading: I write about design and building on the web
     headingLevel: h2
     subtext: Articles and template deep-dives on the CloudCannon blog.
     doodleSource: /assets/doodle/stack.svg
