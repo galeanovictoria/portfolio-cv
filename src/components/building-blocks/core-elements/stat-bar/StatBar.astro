@@ -137,19 +137,30 @@ if (!_component && visibleStats.length === 0) return;
       }
 
       @media (width < 860px) {
-        > .stat-bar-items {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-
-        &.variant-boxed > .stat-bar-items > .stat {
-          border-bottom: 1.5px solid var(--color-border-strong);
-
-          &:nth-child(2n) {
-            border-right: 0;
+          > .stat-bar-items {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
           }
-
-          &:nth-last-child(-n + 1) {
-            border-bottom: 0;
+  
+          &.variant-boxed > .stat-bar-items > .stat {
+            border-bottom: 1.5px solid var(--color-border-strong);
+  
+            &:nth-child(2n) {
+              border-right: 0;
+            }
+  
+            /* The panel's own edge rules off the last row, so those cells drop
+               their bottom border. An even count fills the row, making it the
+               final two cells; an odd count leaves the last cell alone in
+               column one, where it also drops the divider to its right rather
+               than hang a stub beside the empty half. */
+            &:last-child {
+              border-bottom: 0;
+              border-right: 0;
+            }
+  
+            &:nth-last-child(2):nth-child(odd) {
+              border-bottom: 0;
+            }
           }
         }
       }
