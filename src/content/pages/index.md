@@ -169,7 +169,7 @@ pageSections:
         label: Leads generated
       - value: '13'
         label: New customers
-      - value: '&lt;3wk'
+      - value: 2wk
         label: To handoff
     buttonSections:
       - _component: building-blocks/core-elements/button
